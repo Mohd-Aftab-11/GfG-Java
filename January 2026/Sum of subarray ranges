@@ -1,0 +1,65 @@
+import java.util.Stack;
+
+public class Solution {
+    public int subarrayRanges(int[] arr) {
+        int n = arr.length;
+        long sumMax = 0, sumMin = 0;
+        
+        int[] prevGreater = new int[n];
+        int[] nextGreater = new int[n];
+        
+        Stack<Integer> stack = new Stack<>();
+        
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] <= arr[i]) {
+                stack.pop();
+            }
+            prevGreater[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        
+        stack.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] < arr[i]) {
+                stack.pop();
+            }
+            nextGreater[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        
+        for (int i = 0; i < n; i++) {
+            long leftCount = i - prevGreater[i];
+            long rightCount = nextGreater[i] - i;
+            sumMax += (long) arr[i] * leftCount * rightCount;
+        }
+        
+        int[] prevSmaller = new int[n];
+        int[] nextSmaller = new int[n];
+        
+        stack.clear();
+        for (int i = 0; i < n; i++) {
+            while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+                stack.pop();
+            }
+            prevSmaller[i] = stack.isEmpty() ? -1 : stack.peek();
+            stack.push(i);
+        }
+        
+        stack.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+                stack.pop();
+            }
+            nextSmaller[i] = stack.isEmpty() ? n : stack.peek();
+            stack.push(i);
+        }
+        
+        for (int i = 0; i < n; i++) {
+            long leftCount = i - prevSmaller[i];
+            long rightCount = nextSmaller[i] - i;
+            sumMin += (long) arr[i] * leftCount * rightCount;
+        }
+        
+        return (int)(sumMax - sumMin);
+    }
+}
