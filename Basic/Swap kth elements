@@ -1,0 +1,11 @@
+class Solution {
+    public void swapKth(List<Integer> arr, int k) {
+        int n = arr.size();
+        int fromStart = k - 1;
+        int fromEnd = n - k;
+        int temp = arr.get(fromStart);
+        
+        arr.set(fromStart, arr.get(fromEnd));
+        arr.set(fromEnd, temp);
+    }
+}
