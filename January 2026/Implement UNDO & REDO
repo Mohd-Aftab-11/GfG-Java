@@ -1,0 +1,37 @@
+import java.util.*;
+
+class Solution {
+    private StringBuilder current;
+    private Stack<StringBuilder> undoStack;
+    private Stack<StringBuilder> redoStack;
+    
+    public Solution() {
+        current = new StringBuilder();
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+    }
+    
+    public void append(char x) {
+        undoStack.push(new StringBuilder(current.toString()));
+        redoStack.clear();
+        current.append(x);
+    }
+    
+    public void undo() {
+        if (!undoStack.isEmpty()) {
+            redoStack.push(new StringBuilder(current.toString()));
+            current = new StringBuilder(undoStack.pop().toString());
+        }
+    }
+    
+    public void redo() {
+        if (!redoStack.isEmpty()) {
+            undoStack.push(new StringBuilder(current.toString()));
+            current = new StringBuilder(redoStack.pop().toString());
+        }
+    }
+    
+    public String read() {
+        return current.toString();
+    }
+}
