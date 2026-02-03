@@ -1,0 +1,21 @@
+class Solution {
+    String firstAlphabet(String S) {
+        StringBuilder result = new StringBuilder();
+        
+        boolean newWord = true;
+        
+        for (int i = 0; i < S.length(); i++) {
+            char ch = S.charAt(i);
+            
+            if (ch == ' ') {
+                newWord = true;
+            }
+            else if (newWord) {
+                result.append(ch);
+                newWord = false;
+            }
+        }
+        
+        return result.toString();
+    }
+}
