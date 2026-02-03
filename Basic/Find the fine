@@ -1,0 +1,22 @@
+class Solution {
+    public long totalFine(int date, int car[], int fine[]) {
+        long total = 0;
+        boolean isDateEven = (date % 2 == 0);
+        
+        if (isDateEven) {
+            for (int i = 0; i < car.length; i++) {
+                if (car[i] % 2 != 0) {
+                    total += fine[i];
+                }
+            }
+        } else {
+            for (int i = 0; i < car.length; i++) {
+                if (car[i] % 2 == 0) {
+                    total += fine[i];
+                }
+            }
+        }
+        
+        return total;
+    }
+}
