@@ -1,0 +1,7 @@
+class Solution {
+    static int maximizeMoney(int N, int K) {
+        int housesRobbed = (N + 1) / 2;
+        
+        return housesRobbed * K;
+    }
+}
