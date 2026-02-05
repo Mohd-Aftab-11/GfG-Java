@@ -1,0 +1,18 @@
+class Solution {
+    static int closestNumber(int n, int m) {
+        int q = n / m;
+        
+        int candidate1 = q * m;
+        
+        int candidate2 = (n * m > 0) ? (q + 1) * m : (q - 1) * m;
+        
+        int diff1 = Math.abs(n - candidate1);
+        int diff2 = Math.abs(n - candidate2);
+        
+        if (diff1 == diff2) {
+            return (Math.abs(candidate1) > Math.abs(candidate2)) ? candidate1 : candidate2;
+        }
+        
+        return (diff1 < diff2) ? candidate1 : candidate2;
+    }
+}
