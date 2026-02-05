@@ -1,0 +1,34 @@
+class Solution {
+    int minValue(String S, int K) {
+        if (S == null || S.length() == 0) return 0;
+        if (K >= S.length()) return 0;
+        
+        int[] freq = new int[26];
+        for (char c : S.toCharArray()) {
+            freq[c - 'a']++;
+        }
+        
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        for (int f : freq) {
+            if (f > 0) {
+                maxHeap.add(f);
+            }
+        }
+        
+        for (int i = 0; i < K; i++) {
+            if (maxHeap.isEmpty()) break;
+            int current = maxHeap.poll();
+            if (current > 1) {
+                maxHeap.add(current - 1);
+            }
+        }
+        
+        int result = 0;
+        while (!maxHeap.isEmpty()) {
+            int f = maxHeap.poll();
+            result += f * f;
+        }
+        
+        return result;
+    }
+}
