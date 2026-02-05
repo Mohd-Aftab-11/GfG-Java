@@ -1,0 +1,29 @@
+class Solution {
+    public static String concatenatedString(String s1, String s2) {
+        StringBuilder result = new StringBuilder();
+        
+        boolean[] freq1 = new boolean[256];
+        boolean[] freq2 = new boolean[256];
+        
+        for (char c : s1.toCharArray()) {
+            freq1[c] = true;
+        }
+        
+        for (char c : s2.toCharArray()) {
+            freq2[c] = true;
+        }
+        
+        for (char c : s1.toCharArray()) {
+            if (!freq2[c]) {
+                result.append(c);
+            }
+        }
+        
+        for (char c : s2.toCharArray()) {
+            if (!freq1[c]) {
+                result.append(c);
+            }
+        }
+        return result.length() == 0 ? "-1" : result.toString();
+    }
+}
