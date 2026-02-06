@@ -1,0 +1,61 @@
+import java.util.Arrays;
+import java.util.Collections;
+
+class Solution {
+    public int[] smallestDiff(int a[], int b[], int c[]) {
+        Arrays.sort(a);
+        Arrays.sort(b);
+        Arrays.sort(c);
+        
+        int n = a.length;
+        int i = 0, j = 0, k = 0;
+        
+        int minDiff = Integer.MAX_VALUE;
+        int minSum = Integer.MAX_VALUE;
+        int[] result = new int[3];
+        
+        while (i < n && j < n && k < n) {
+            int x = a[i];
+            int y = b[j];
+            int z = c[k];
+            
+            int currentMin = Math.min(x, Math.min(y, z));
+            int currentMax = Math.max(x, Math.max(y, z));
+            int currentDiff = currentMax - currentMin;
+            int currentSum = x + y + z;
+            
+            if (currentDiff < minDiff || 
+                (currentDiff == minDiff && currentSum < minSum)) {
+                minDiff = currentDiff;
+                minSum = currentSum;
+                result[0] = x;
+                result[1] = y;
+                result[2] = z;
+            }
+            
+            if (x <= y && x <= z) {
+                i++;
+            } else if (y <= x && y <= z) {
+                j++;
+            } else {
+                k++;
+            }
+        }
+        
+        Arrays.sort(result);
+        reverseArray(result);
+        
+        return result;
+    }
+    
+    private void reverseArray(int[] arr) {
+        int left = 0, right = arr.length - 1;
+        while (left < right) {
+            int temp = arr[left];
+            arr[left] = arr[right];
+            arr[right] = temp;
+            left++;
+            right--;
+        }
+    }
+}
