@@ -1,0 +1,94 @@
+import java.util.*;
+
+class Solution {
+    static int maxNtype(int arr[]) {
+        int n = arr.length;
+        
+        int minIndex = 0, maxIndex = 0;
+        for (int i = 1; i < n; i++) {
+            if (arr[i] < arr[minIndex]) minIndex = i;
+            if (arr[i] > arr[maxIndex]) maxIndex = i;
+        }
+        
+        boolean isAscending = true;
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] > arr[i + 1]) {
+                isAscending = false;
+                break;
+            }
+        }
+        if (isAscending) return 1;
+        
+        boolean isDescending = true;
+        for (int i = 0; i < n - 1; i++) {
+            if (arr[i] < arr[i + 1]) {
+                isDescending = false;
+                break;
+            }
+        }
+        if (isDescending) return 2;
+        
+        if (maxIndex == (minIndex - 1 + n) % n) {
+            boolean validAscRotated = true;
+            
+            for (int i = minIndex; i < n - 1; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    validAscRotated = false;
+                    break;
+                }
+            }
+            
+            if (validAscRotated) {
+                for (int i = 0; i < minIndex - 1; i++) {
+                    if (arr[i] > arr[i + 1]) {
+                        validAscRotated = false;
+                        break;
+                    }
+                }
+            }
+            
+            if (validAscRotated && minIndex > 0 && arr[n - 1] > arr[0]) {
+                validAscRotated = false;
+            }
+            
+            if (validAscRotated) return 4;
+        }
+        
+        if (minIndex == (maxIndex - 1 + n) % n) {
+            boolean validDescRotated = true;
+            
+            for (int i = maxIndex; i < n - 1; i++) {
+                if (arr[i] < arr[i + 1]) {
+                    validDescRotated = false;
+                    break;
+                }
+            }
+            
+            if (validDescRotated) {
+                for (int i = 0; i < maxIndex - 1; i++) {
+                    if (arr[i] < arr[i + 1]) {
+                        validDescRotated = false;
+                        break;
+                    }
+                }
+            }
+            
+            if (validDescRotated && maxIndex > 0 && arr[n - 1] < arr[0]) {
+                validDescRotated = false;
+            }
+            
+            if (validDescRotated) return 3;
+        }
+        
+        return -1;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(maxNtype(new int[]{2, 1, 5, 4, 3}));
+        System.out.println(maxNtype(new int[]{3, 4, 5, 1, 2}));
+        System.out.println(maxNtype(new int[]{1, 2, 3, 4, 5}));
+        System.out.println(maxNtype(new int[]{5, 4, 3, 2, 1}));
+        System.out.println(maxNtype(new int[]{4, 5, 1, 2, 3}));
+        System.out.println(maxNtype(new int[]{3, 2, 1, 5, 4}));
+    }
+}
