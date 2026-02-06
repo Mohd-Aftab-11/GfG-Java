@@ -1,0 +1,15 @@
+class Solution {
+    int replaceBit(int N, int K) {
+        int totalBits = (int)(Math.log(N) / Math.log(2)) + 1;
+        
+        if (K > totalBits) return N;
+        
+        int bitPosFromRight = totalBits - K;
+        
+        if ((N & (1 << bitPosFromRight)) != 0) {
+            return N & ~(1 << bitPosFromRight);
+        }
+        
+        return N;
+    }
+}
