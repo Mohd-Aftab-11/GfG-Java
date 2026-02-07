@@ -1,0 +1,31 @@
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.Iterator;
+
+class Solution {
+    public void enqueue(Queue<Integer> q, int x) {
+        q.add(x);
+    }
+
+    public void dequeue(Queue<Integer> q) {
+        if (!q.isEmpty()) {
+            q.poll();
+        }
+    }
+
+    public int front(Queue<Integer> q) {
+        if (!q.isEmpty()) {
+            return q.peek();
+        }
+        return -1;
+    }
+
+    public boolean find(Queue<Integer> q, int y) {
+        for (Integer element : q) {
+            if (element == y) {
+                return true;
+            }
+        }
+        return false;
+    }
+}
