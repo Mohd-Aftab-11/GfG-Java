@@ -1,0 +1,17 @@
+import java.util.Arrays;
+
+class Solution {
+    public int minimumDifference(int[] arr) {
+        Arrays.sort(arr);
+        int minDiff = Integer.MAX_VALUE;
+        
+        for (int i = 1; i < arr.length; i++) {
+            int diff = arr[i] - arr[i - 1];
+            if (diff < minDiff) {
+                minDiff = diff;
+            }
+        }
+        
+        return minDiff;
+    }
+}
