@@ -1,0 +1,49 @@
+class Solution {
+    public long closestPalindrome(long num) {
+        if (num < 10) return num;
+        
+        String numStr = Long.toString(num);
+        int len = numStr.length();
+        
+        long[] candidates = new long[5];
+        
+        int halfLen = (len + 1) / 2;
+        long firstHalf = Long.parseLong(numStr.substring(0, halfLen));
+        
+        candidates[0] = createPalindrome(firstHalf, len % 2 == 0);
+        candidates[1] = createPalindrome(firstHalf + 1, len % 2 == 0);
+        candidates[2] = createPalindrome(firstHalf - 1, len % 2 == 0);
+        
+        candidates[3] = (long)Math.pow(10, len - 1) - 1;
+        candidates[4] = (long)Math.pow(10, len) + 1;
+        
+        long result = num;
+        long minDiff = Long.MAX_VALUE;
+        
+        for (long candidate : candidates) {
+            if (candidate <= 0) continue;
+            
+            long diff = Math.abs(candidate - num);
+            if (diff < minDiff || (diff == minDiff && candidate < result)) {
+                minDiff = diff;
+                result = candidate;
+            }
+        }
+        
+        return result;
+    }
+    
+    private long createPalindrome(long firstHalf, boolean evenLength) {
+        if (firstHalf < 0) return -1;
+        
+        String firstHalfStr = Long.toString(firstHalf);
+        StringBuilder sb = new StringBuilder(firstHalfStr);
+        
+        int len = firstHalfStr.length();
+        for (int i = evenLength ? len - 1 : len - 2; i >= 0; i--) {
+            sb.append(firstHalfStr.charAt(i));
+        }
+        
+        return Long.parseLong(sb.toString());
+    }
+}
