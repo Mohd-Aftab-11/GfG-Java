@@ -1,0 +1,36 @@
+class Tree {
+    ArrayList<Integer> noSibling(Node node) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        if (node == null) return result;
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(node);
+        
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            
+            if (current.left != null) {
+                queue.add(current.left);
+                if (current.right == null) {
+                    result.add(current.left.data);
+                }
+            }
+            
+            if (current.right != null) {
+                queue.add(current.right);
+                if (current.left == null) {
+                    result.add(current.right.data);
+                }
+            }
+        }
+        
+        Collections.sort(result);
+        
+        if (result.isEmpty()) {
+            result.add(-1);
+        }
+        
+        return result;
+    }
+}
