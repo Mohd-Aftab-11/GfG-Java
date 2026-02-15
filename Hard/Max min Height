@@ -1,0 +1,60 @@
+class Solution {
+    public int maxMinHeight(int[] arr, int k, int w) {
+        int n = arr.length;
+        
+        int minHeight = arr[0];
+        int maxHeight = arr[0];
+        for (int height : arr) {
+            minHeight = Math.min(minHeight, height);
+            maxHeight = Math.max(maxHeight, height);
+        }
+        
+        maxHeight += k;
+        
+        int left = minHeight;
+        int right = maxHeight;
+        int result = minHeight;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (isPossible(arr, mid, k, w)) {
+                result = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isPossible(int[] arr, int target, int k, int w) {
+        int n = arr.length;
+        long[] daysUsed = new long[n];
+        long totalWaterings = 0;
+        long currentWaterings = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (i >= w) {
+                currentWaterings -= daysUsed[i - w];
+            }
+            
+            long currentHeight = arr[i] + currentWaterings;
+            
+            if (currentHeight < target) {
+                long needed = target - currentHeight;
+                
+                if (totalWaterings + needed > k) {
+                    return false;
+                }
+                
+                daysUsed[i] = needed;
+                currentWaterings += needed;
+                totalWaterings += needed;
+            }
+        }
+        
+        return true;
+    }
+}
