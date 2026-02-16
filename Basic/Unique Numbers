@@ -1,0 +1,31 @@
+class Solution {
+    static ArrayList<Integer> uniqueNumbers(int L, int R) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int num = L; num <= R; num++) {
+            if (hasUniqueDigits(num)) {
+                result.add(num);
+            }
+        }
+        
+        return result;
+    }
+    
+    static boolean hasUniqueDigits(int num) {
+        boolean[] seen = new boolean[10];
+        
+        while (num > 0) {
+            int digit = num % 10;
+            
+            if (seen[digit]) {
+                return false;
+            }
+            
+            seen[digit] = true;
+            
+            num = num / 10;
+        }
+        
+        return true;
+    }
+}
