@@ -1,0 +1,20 @@
+class Solution {
+    public void toSumTree(Node root) {
+        transformToSumTree(root);
+    }
+    
+    private int transformToSumTree(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        
+        int originalValue = node.data;
+        
+        int leftSum = transformToSumTree(node.left);
+        int rightSum = transformToSumTree(node.right);
+        
+        node.data = leftSum + rightSum;
+        
+        return originalValue + leftSum + rightSum;
+    }
+}
