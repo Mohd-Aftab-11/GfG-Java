@@ -1,0 +1,52 @@
+class Solution {
+    public int minMen(int arr[]) {
+        int n = arr.length;
+        if (n == 0) return 0;
+        
+        List<int[]> intervals = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) {
+            if (arr[i] != -1) {
+                int left = Math.max(0, i - arr[i]);
+                int right = Math.min(n - 1, i + arr[i]);
+                intervals.add(new int[]{left, right});
+            }
+        }
+        
+        if (n == 1) {
+            for (int[] interval : intervals) {
+                if (interval[0] <= 0 && interval[1] >= 0) {
+                    return 1;
+                }
+            }
+            return -1;
+        }
+        
+        intervals.sort((a, b) -> {
+            if (a[0] != b[0]) return Integer.compare(a[0], b[0]);
+            return Integer.compare(b[1], a[1]);
+        });
+        
+        int count = 0;
+        int covered = 0;
+        int i = 0;
+        int m = intervals.size();
+        
+        while (covered < n - 1) {
+            int farthest = covered;
+            while (i < m && intervals.get(i)[0] <= covered) {
+                farthest = Math.max(farthest, intervals.get(i)[1]);
+                i++;
+            }
+            
+            if (farthest == covered) {
+                return -1;
+            }
+            
+            covered = farthest;
+            count++;
+        }
+        
+        return covered >= n - 1 ? count : -1;
+    }
+}
