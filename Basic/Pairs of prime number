@@ -1,0 +1,45 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public int[] prime_pairs(int n) {
+        boolean[] isPrime = new boolean[n + 1];
+        for (int i = 2; i <= n; i++) {
+            isPrime[i] = true;
+        }
+        
+        for (int i = 2; i * i <= n; i++) {
+            if (isPrime[i]) {
+                for (int j = i * i; j <= n; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+        
+        List<Integer> primes = new ArrayList<>();
+        for (int i = 2; i <= n; i++) {
+            if (isPrime[i]) {
+                primes.add(i);
+            }
+        }
+        
+        List<Integer> result = new ArrayList<>();
+        for (int i = 0; i < primes.size(); i++) {
+            int p = primes.get(i);
+            for (int j = 0; j < primes.size(); j++) {
+                int q = primes.get(j);
+                if (p * q <= n) {
+                    result.add(p);
+                    result.add(q);
+                }
+            }
+        }
+        
+        int[] ans = new int[result.size()];
+        for (int i = 0; i < result.size(); i++) {
+            ans[i] = result.get(i);
+        }
+        
+        return ans;
+    }
+}
