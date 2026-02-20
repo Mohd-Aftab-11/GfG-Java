@@ -1,0 +1,19 @@
+class Solution {
+    static ArrayList<Integer> downwardDiagonal(int N, int A[][]) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int diag = 0; diag < 2 * N - 1; diag++) {
+            
+            int row = diag < N ? 0 : diag - N + 1;
+            int col = diag < N ? diag : N - 1;
+            
+            while (row < N && col >= 0) {
+                result.add(A[row][col]);
+                row++;
+                col--;
+            }
+        }
+        
+        return result;
+    }
+}
