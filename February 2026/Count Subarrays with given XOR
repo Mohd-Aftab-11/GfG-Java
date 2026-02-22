@@ -1,0 +1,22 @@
+class Solution {
+    public long subarrayXor(int arr[], int k) {
+        HashMap<Integer, Integer> prefixXorCount = new HashMap<>();
+        
+        prefixXorCount.put(0, 1);
+        
+        long count = 0;
+        int currentXor = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
+            currentXor ^= arr[i];
+            
+            int target = currentXor ^ k;
+            
+            count += prefixXorCount.getOrDefault(target, 0);
+            
+            prefixXorCount.put(currentXor, prefixXorCount.getOrDefault(currentXor, 0) + 1);
+        }
+        
+        return count;
+    }
+}
