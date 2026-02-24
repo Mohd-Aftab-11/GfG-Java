@@ -1,0 +1,27 @@
+class Solution {
+    public int equalSumSpan(int[] a1, int[] a2) {
+        int n = a1.length;
+        
+        if (n == 0) return 0;
+        
+        java.util.HashMap<Integer, Integer> firstOccurrence = new java.util.HashMap<>();
+        
+        firstOccurrence.put(0, -1);
+        
+        int cumulativeSum = 0;
+        int maxSpan = 0;
+        
+        for (int i = 0; i < n; i++) {
+            cumulativeSum += (a1[i] - a2[i]);
+            
+            if (firstOccurrence.containsKey(cumulativeSum)) {
+                int spanLength = i - firstOccurrence.get(cumulativeSum);
+                maxSpan = Math.max(maxSpan, spanLength);
+            } else {
+                firstOccurrence.put(cumulativeSum, i);
+            }
+        }
+        
+        return maxSpan;
+    }
+}
