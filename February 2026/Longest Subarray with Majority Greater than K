@@ -1,0 +1,46 @@
+class Solution {
+    public int longestSubarray(int[] arr, int k) {
+        int n = arr.length;
+        
+        int[] transformed = new int[n];
+        for (int i = 0; i < n; i++) {
+            transformed[i] = arr[i] > k ? 1 : -1;
+        }
+        
+        int[] prefixSum = new int[n];
+        prefixSum[0] = transformed[0];
+        for (int i = 1; i < n; i++) {
+            prefixSum[i] = prefixSum[i - 1] + transformed[i];
+        }
+        
+        int maxLength = 0;
+        
+        if (prefixSum[n - 1] > 0) {
+            return n;
+        }
+        
+        java.util.HashMap<Integer, Integer> firstOccurrence = new java.util.HashMap<>();
+        
+        for (int j = 0; j < n; j++) {
+            if (prefixSum[j] > 0) {
+                maxLength = Math.max(maxLength, j + 1);
+            }
+            
+            if (!firstOccurrence.containsKey(prefixSum[j])) {
+                firstOccurrence.put(prefixSum[j], j);
+            }
+        }
+        for (int j = 0; j < n; j++) {
+            int target = prefixSum[j] - 1;
+            
+            if (firstOccurrence.containsKey(target)) {
+                int i = firstOccurrence.get(target) + 1; // Start index of subarray
+                if (i <= j) {
+                    maxLength = Math.max(maxLength, j - i + 1);
+                }
+            }
+        }
+        
+        return maxLength;
+    }
+}
