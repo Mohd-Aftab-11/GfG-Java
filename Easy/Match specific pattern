@@ -1,0 +1,41 @@
+import java.util.*;
+
+class GfG {
+    public static ArrayList<String> findMatchedWords(int n, ArrayList<String> dict, String pattern) {
+        ArrayList<String> result = new ArrayList<>();
+        
+        String patternEncoding = getEncoding(pattern);
+        
+        for (String word : dict) {
+            if (word.length() == pattern.length()) {
+                String wordEncoding = getEncoding(word);
+                if (wordEncoding.equals(patternEncoding)) {
+                    result.add(word);
+                }
+            }
+        }
+        
+        return result;
+    }
+    
+    private static String getEncoding(String s) {
+        HashMap<Character, Integer> firstOccurrence = new HashMap<>();
+        StringBuilder encoding = new StringBuilder();
+        
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (!firstOccurrence.containsKey(c)) {
+                firstOccurrence.put(c, i);
+                encoding.append(i);
+            } else {
+                encoding.append(firstOccurrence.get(c));
+            }
+            
+            if (i < s.length() - 1) {
+                encoding.append(",");
+            }
+        }
+        
+        return encoding.toString();
+    }
+}
