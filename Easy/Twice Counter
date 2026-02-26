@@ -1,0 +1,18 @@
+class Solution {
+    public int countWords(String list[], int n) {
+        HashMap<String, Integer> frequencyMap = new HashMap<>();
+        
+        for (String word : list) {
+            frequencyMap.put(word, frequencyMap.getOrDefault(word, 0) + 1);
+        }
+        
+        int count = 0;
+        for (int freq : frequencyMap.values()) {
+            if (freq == 2) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+}
