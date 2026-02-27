@@ -1,0 +1,36 @@
+class Solution {
+    static int checkPower(int N) {
+        if (N == 1) return 1;
+        for (int y = 2; y <= 31; y++) {
+            int x = (int) Math.round(Math.pow(N, 1.0 / y));
+            
+            long power = 1;
+            for (int i = 0; i < y; i++) {
+                power *= x;
+                if (power > N) break;
+            }
+            
+            if (power == N) {
+                return 1;
+            }
+            
+            if (x > 1) {
+                power = 1;
+                for (int i = 0; i < y; i++) {
+                    power *= (x - 1);
+                    if (power > N) break;
+                }
+                if (power == N) return 1;
+            }
+            
+            power = 1;
+            for (int i = 0; i < y; i++) {
+                power *= (x + 1);
+                if (power > N) break;
+            }
+            if (power == N) return 1;
+        }
+        
+        return 0;
+    }
+}
