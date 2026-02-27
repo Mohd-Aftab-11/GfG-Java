@@ -1,0 +1,27 @@
+class Solution {
+    void segregateEvenOdd(int arr[]) {
+        int n = arr.length;
+        
+        java.util.ArrayList<Integer> evens = new java.util.ArrayList<>();
+        java.util.ArrayList<Integer> odds = new java.util.ArrayList<>();
+        
+        for (int num : arr) {
+            if (num % 2 == 0) {
+                evens.add(num);
+            } else {
+                odds.add(num);
+            }
+        }
+        
+        java.util.Collections.sort(evens);
+        java.util.Collections.sort(odds);
+        
+        int index = 0;
+        for (int even : evens) {
+            arr[index++] = even;
+        }
+        for (int odd : odds) {
+            arr[index++] = odd;
+        }
+    }
+}
