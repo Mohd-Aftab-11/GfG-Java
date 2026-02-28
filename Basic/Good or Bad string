@@ -1,0 +1,39 @@
+class Solution {
+    static int isGoodorBad(String S) {
+        int maxVowels = 0;
+        int maxConsonants = 0;
+        int currentVowels = 0;
+        int currentConsonants = 0;
+        
+        for (int i = 0; i < S.length(); i++) {
+            char c = S.charAt(i);
+            
+            if (isVowel(c)) {
+                currentVowels++;
+                currentConsonants = 0;
+                maxVowels = Math.max(maxVowels, currentVowels);
+            } 
+            else if (c == '?') {
+                currentVowels++;
+                currentConsonants++;
+                maxVowels = Math.max(maxVowels, currentVowels);
+                maxConsonants = Math.max(maxConsonants, currentConsonants);
+            } 
+            else {
+                currentConsonants++;
+                currentVowels = 0;
+                maxConsonants = Math.max(maxConsonants, currentConsonants);
+            }
+            
+            if (maxVowels > 5 || maxConsonants > 3) {
+                return 0;
+            }
+        }
+        
+        return 1;
+    }
+    
+    static boolean isVowel(char c) {
+        return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
+    }
+}
