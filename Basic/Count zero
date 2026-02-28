@@ -1,0 +1,15 @@
+class Solution {
+    static long findCountUpto(long d) {
+        long totalNumbers = (long)Math.pow(10, d) - 1;
+        
+        long numbersWithoutZero = 0;
+        
+        if (d == 1) {
+            numbersWithoutZero = 9;
+        } else {
+            numbersWithoutZero = (9 * ((long)Math.pow(9, d) - 1)) / 8;
+        }
+        
+        return totalNumbers - numbersWithoutZero;
+    }
+}
