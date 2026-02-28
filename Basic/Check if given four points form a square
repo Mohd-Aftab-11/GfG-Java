@@ -1,0 +1,42 @@
+import java.util.*;
+
+class Solution {
+    int fourPointSquare(int points[][]) {
+        double[] distances = new double[6];
+        int index = 0;
+        
+        for (int i = 0; i < 4; i++) {
+            for (int j = i + 1; j < 4; j++) {
+                distances[index++] = distance(points[i], points[j]);
+            }
+        }
+        
+        Arrays.sort(distances);
+        
+        for (int i = 0; i < 3; i++) {
+            if (Math.abs(distances[i] - distances[i + 1]) > 1e-10) {
+                return 0;
+            }
+        }
+        
+        if (Math.abs(distances[4] - distances[5]) > 1e-10) {
+            return 0;
+        }
+        
+        if (distances[4] <= distances[0]) {
+            return 0;
+        }
+        
+        if (distances[0] == 0) {
+            return 0;
+        }
+        
+        return 1;
+    }
+    
+    private double distance(int[] p1, int[] p2) {
+        int dx = p1[0] - p2[0];
+        int dy = p1[1] - p2[1];
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+}
