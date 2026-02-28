@@ -1,0 +1,23 @@
+class Solution {
+    String encryptString(String s) {
+        StringBuilder encoded = new StringBuilder();
+        
+        int i = 0;
+        int n = s.length();
+        
+        while (i < n) {
+            char currentChar = s.charAt(i);
+            int count = 0;
+            
+            while (i < n && s.charAt(i) == currentChar) {
+                count++;
+                i++;
+            }
+            
+            encoded.append(currentChar);
+            encoded.append(count);
+        }
+        
+        return encoded.reverse().toString();
+    }
+}
