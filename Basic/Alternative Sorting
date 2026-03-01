@@ -1,0 +1,27 @@
+import java.util.*;
+
+class Solution {
+    public static ArrayList<Integer> alternateSort(int[] arr) {
+        Arrays.sort(arr);
+        
+        int n = arr.length;
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        int left = 0;
+        int right = n - 1;
+        
+        while (left <= right) {
+            if (left <= right) {
+                result.add(arr[right]);
+                right--;
+            }
+            
+            if (left <= right) {
+                result.add(arr[left]);
+                left++;
+            }
+        }
+        
+        return result;
+    }
+}
