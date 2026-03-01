@@ -1,0 +1,27 @@
+class Solution {
+    String shortestPath(String S) {
+        int[] count = new int[26];
+        
+        for (int i = 0; i < S.length(); i++) {
+            count[S.charAt(i) - 'A']++;
+        }
+        
+        int netEW = count['E' - 'A'] - count['W' - 'A'];
+        int netNS = count['N' - 'A'] - count['S' - 'A'];
+        
+        StringBuilder result = new StringBuilder();
+        
+        appendChars(result, 'E', netEW > 0 ? netEW : 0);
+        appendChars(result, 'N', netNS > 0 ? netNS : 0);
+        appendChars(result, 'S', netNS < 0 ? -netNS : 0);
+        appendChars(result, 'W', netEW < 0 ? -netEW : 0);
+        
+        return result.toString();
+    }
+    
+    private void appendChars(StringBuilder sb, char c, int count) {
+        for (int i = 0; i < count; i++) {
+            sb.append(c);
+        }
+    }
+}
