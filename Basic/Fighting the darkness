@@ -1,0 +1,13 @@
+class Solution {
+    long maxDays(int arr[]) {
+        long maxCandleSize = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > maxCandleSize) {
+                maxCandleSize = arr[i];
+            }
+        }
+        
+        return maxCandleSize;
+    }
+}
