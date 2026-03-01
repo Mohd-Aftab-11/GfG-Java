@@ -1,0 +1,9 @@
+class Solution {
+    static int countDivisibles(int A, int B, int M) {
+        int countUpToB = B / M;
+        
+        int countUpToAminus1 = (A - 1) / M;
+        
+        return countUpToB - countUpToAminus1;
+    }
+}
