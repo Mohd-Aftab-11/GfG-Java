@@ -1,0 +1,22 @@
+class Solution {
+    static int totalJumps(int X, int Y, int N, int arr[]) {
+        int totalJumps = 0;
+        
+        for (int i = 0; i < N; i++) {
+            int wallHeight = arr[i];
+            
+            if (wallHeight <= X) {
+                totalJumps += 1;
+            } else {
+                
+                int remainingHeight = wallHeight - X;
+                
+                int cycles = (int)Math.ceil((double)remainingHeight / (X - Y));
+                
+                totalJumps += cycles + 1;
+            }
+        }
+        
+        return totalJumps;
+    }
+}
