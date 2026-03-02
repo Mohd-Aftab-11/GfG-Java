@@ -1,0 +1,7 @@
+class Solution {
+    static long convertEvenBitToZero(long n) {
+        
+        long mask = 0xAAAAAAAAAAAAAAAAL;
+        return n & mask;
+    }
+}
