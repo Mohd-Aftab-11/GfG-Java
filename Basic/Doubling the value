@@ -1,0 +1,13 @@
+class Solution {
+    long solve(int n, long A[], long b) {
+        long currentB = b;
+        
+        for (int i = 0; i < n; i++) {
+            if (A[i] == currentB) {
+                currentB *= 2;
+            }
+        }
+        
+        return currentB;
+    }
+}
