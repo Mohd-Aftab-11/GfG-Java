@@ -1,0 +1,21 @@
+class Solution {
+    static String checkFibonacci(int N) {
+        long nSquared = (long) N * N;
+        
+        long val1 = 5 * nSquared + 4;
+        long val2 = 5 * nSquared - 4;
+        
+        if (isPerfectSquare(val1) || isPerfectSquare(val2)) {
+            return "Yes";
+        } else {
+            return "No";
+        }
+    }
+    
+    static boolean isPerfectSquare(long num) {
+        if (num < 0) return false;
+        
+        long sqrt = (long) Math.sqrt(num);
+        return sqrt * sqrt == num;
+    }
+}
