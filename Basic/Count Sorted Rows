@@ -1,0 +1,35 @@
+class Solution {
+    int sortedCount(int N, int M, int Mat[][]) {
+        int count = 0;
+        
+        for (int i = 0; i < N; i++) {
+            if (isSorted(Mat[i], M)) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+    
+    boolean isSorted(int[] row, int M) {
+        if (M == 1) return true;
+        
+        boolean increasing = true;
+        boolean decreasing = true;
+        
+        for (int j = 1; j < M; j++) {
+            if (row[j] <= row[j-1]) {
+                increasing = false;
+            }
+            if (row[j] >= row[j-1]) {
+                decreasing = false;
+            }
+            
+            if (!increasing && !decreasing) {
+                return false;
+            }
+        }
+        
+        return increasing || decreasing;
+    }
+}
