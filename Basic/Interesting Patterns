@@ -1,0 +1,22 @@
+class Solution {
+    static String[] interestingPattern(int N) {
+        int size = 2 * N - 1;
+        String[] result = new String[size];
+        
+        for (int i = 0; i < size; i++) {
+            StringBuilder row = new StringBuilder();
+            
+            for (int j = 0; j < size; j++) {
+                int minDist = Math.min(Math.min(i, j), Math.min(size - 1 - i, size - 1 - j));
+                
+                int value = N - minDist;
+                
+                row.append(value);
+            }
+            
+            result[i] = row.toString();
+        }
+        
+        return result;
+    }
+}
