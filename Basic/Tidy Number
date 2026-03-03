@@ -1,0 +1,19 @@
+class Solution {
+    int isTidy(int N) {
+        if (N < 10) return 1;
+        
+        int prevDigit = 10;
+        while (N > 0) {
+            int currentDigit = N % 10;
+            
+            if (currentDigit > prevDigit) {
+                return 0;
+            }
+            
+            prevDigit = currentDigit;
+            N = N / 10;
+        }
+        
+        return 1;
+    }
+}
