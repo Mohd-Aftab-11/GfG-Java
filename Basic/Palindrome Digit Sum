@@ -1,0 +1,26 @@
+class Solution {
+    boolean isDigitSumPalindrome(int n) {
+        int sum = 0;
+        int temp = n;
+        
+        while (temp > 0) {
+            sum += temp % 10;
+            temp = temp / 10;
+        }
+        
+        return isPalindrome(sum);
+    }
+    
+    boolean isPalindrome(int num) {
+        int original = num;
+        int reversed = 0;
+        
+        while (num > 0) {
+            int digit = num % 10;
+            reversed = reversed * 10 + digit;
+            num = num / 10;
+        }
+        
+        return original == reversed;
+    }
+}
