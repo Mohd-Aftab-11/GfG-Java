@@ -1,0 +1,14 @@
+class Solution {
+    static long kthDigit(int a, int b, int k) {
+        long result = 1;
+        for (int i = 0; i < b; i++) {
+            result *= a;
+        }
+        
+        for (int i = 1; i < k; i++) {
+            result /= 10;
+        }
+        
+        return result % 10;
+    }
+}
