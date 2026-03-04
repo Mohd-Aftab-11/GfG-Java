@@ -1,0 +1,25 @@
+class Solution {
+    public int maxSubarrayXOR(int[] arr, int k) {
+        int n = arr.length;
+        
+        if (n == 0 || k == 0 || k > n) {
+            return 0;
+        }
+        
+        int currentXOR = 0;
+        for (int i = 0; i < k; i++) {
+            currentXOR ^= arr[i];
+        }
+        
+        int maxXOR = currentXOR;
+        
+        for (int i = k; i < n; i++) {
+            currentXOR ^= arr[i - k];
+            currentXOR ^= arr[i];
+            
+            maxXOR = Math.max(maxXOR, currentXOR);
+        }
+        
+        return maxXOR;
+    }
+}
