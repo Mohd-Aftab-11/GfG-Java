@@ -1,0 +1,23 @@
+class Solution {
+    public static int[] lcmAndGcd(int a, int b) {
+        int[] result = new int[2];
+        
+        int gcd = findGCD(a, b);
+        
+        int lcm = (a * b) / gcd;
+        
+        result[0] = lcm;
+        result[1] = gcd;
+        
+        return result;
+    }
+    
+    private static int findGCD(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
