@@ -1,0 +1,17 @@
+class Solution {
+    long MaximumIntegerValue(String S) {
+        long result = S.charAt(0) - '0';
+        
+        for (int i = 1; i < S.length(); i++) {
+            int digit = S.charAt(i) - '0';
+            
+            if (result <= 1 || digit <= 1) {
+                result = result + digit;
+            } else {
+                result = result * digit;
+            }
+        }
+        
+        return result;
+    }
+}
