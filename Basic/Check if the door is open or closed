@@ -1,0 +1,16 @@
+class Solution {
+    static int[] checkDoorStatus(int N) {
+        int[] result = new int[N];
+        
+        for (int i = 1; i <= N; i++) {
+            int sqrt = (int)Math.sqrt(i);
+            if (sqrt * sqrt == i) {
+                result[i-1] = 1;
+            } else {
+                result[i-1] = 0;
+            }
+        }
+        
+        return result;
+    }
+}
