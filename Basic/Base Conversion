@@ -1,0 +1,80 @@
+class Solution {
+    static String[] convert(int a, int b, int c, String d) {
+        String[] result = new String[4];
+        
+        result[0] = decimalToBinary(a);
+        
+        result[1] = binaryToDecimal(b);
+        
+        result[2] = decimalToHexadecimal(c);
+        
+        result[3] = hexadecimalToDecimal(d);
+        
+        return result;
+    }
+    
+    static String decimalToBinary(int num) {
+        if (num == 0) return "0";
+        
+        StringBuilder binary = new StringBuilder();
+        while (num > 0) {
+            binary.append(num % 2);
+            num /= 2;
+        }
+        return binary.reverse().toString();
+    }
+    
+    static String binaryToDecimal(int num) {
+        int decimal = 0;
+        int power = 0;
+        
+        while (num > 0) {
+            int lastDigit = num % 10;
+            decimal += lastDigit * Math.pow(2, power);
+            num /= 10;
+            power++;
+        }
+        
+        return String.valueOf(decimal);
+    }
+    
+    static String decimalToHexadecimal(int num) {
+        if (num == 0) return "0";
+        
+        StringBuilder hex = new StringBuilder();
+        char[] hexChars = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+        
+        while (num > 0) {
+            int remainder = num % 16;
+            hex.append(hexChars[remainder]);
+            num /= 16;
+        }
+        
+        return hex.reverse().toString();
+    }
+    
+    static String hexadecimalToDecimal(String hex) {
+        int decimal = 0;
+        int power = 0;
+        
+        for (int i = hex.length() - 1; i >= 0; i--) {
+            char c = hex.charAt(i);
+            int value;
+            
+            if (c >= '0' && c <= '9') {
+                value = c - '0';
+            } else if (c >= 'A' && c <= 'F') {
+                value = c - 'A' + 10;
+            } else if (c >= 'a' && c <= 'f') {
+                value = c - 'a' + 10;
+            } else {
+                value = 0;
+            }
+            
+            decimal += value * Math.pow(16, power);
+            power++;
+        }
+        
+        return String.valueOf(decimal);
+    }
+}
