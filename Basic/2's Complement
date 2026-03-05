@@ -1,0 +1,30 @@
+class Solution {
+    static String complement(String bi) {
+        int n = bi.length();
+        
+        char[] onesComplement = new char[n];
+        for (int i = 0; i < n; i++) {
+            if (bi.charAt(i) == '0') {
+                onesComplement[i] = '1';
+            } else {
+                onesComplement[i] = '0';
+            }
+        }
+        
+        StringBuilder twosComplement = new StringBuilder();
+        int carry = 1;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            if (onesComplement[i] == '1' && carry == 1) {
+                twosComplement.append('0');
+            } else if (onesComplement[i] == '0' && carry == 1) {
+                twosComplement.append('1');
+                carry = 0;
+            } else {
+                twosComplement.append(onesComplement[i]);
+            }
+        }
+        
+        return twosComplement.reverse().toString();
+    }
+}
