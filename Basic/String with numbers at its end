@@ -1,0 +1,26 @@
+class Solution {
+    int isSame(String s) {
+        int n = s.length();
+        
+        int num = 0;
+        int power = 1;
+        int numLength = 0;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            char c = s.charAt(i);
+            if (c >= '0' && c <= '9') {
+                num = num + (c - '0') * power;
+                power *= 10;
+                numLength++;
+            } else {
+                break;
+            }
+        }
+        
+        if (numLength == 0 || numLength == n) {
+            return 0;
+        }
+        
+        return (n - numLength) == num ? 1 : 0;
+    }
+}
