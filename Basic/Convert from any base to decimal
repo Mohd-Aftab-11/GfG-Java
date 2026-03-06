@@ -1,0 +1,30 @@
+class Solution {
+    static int decimalEquivalent(String N, int b) {
+        int result = 0;
+        int n = N.length();
+        
+        for (int i = 0; i < n; i++) {
+            char c = N.charAt(i);
+            int digitValue;
+            
+            if (c >= '0' && c <= '9') {
+                digitValue = c - '0';
+            } else if (c >= 'A' && c <= 'Z') {
+                digitValue = c - 'A' + 10;
+            } else if (c >= 'a' && c <= 'z') {
+                digitValue = c - 'a' + 10;
+            } else {
+                return -1;
+            }
+            
+            if (digitValue >= b) {
+                return -1;
+            }
+            
+            result = result * b + digitValue;
+            
+        }
+        
+        return result;
+    }
+}
