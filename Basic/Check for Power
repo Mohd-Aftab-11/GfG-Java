@@ -1,0 +1,14 @@
+class Solution {
+    public boolean isPowerOfAnother(int X, int Y) {
+        if (X == 1) {
+            return Y == 1;
+        }
+        
+        long result = 1;
+        while (result < Y) {
+            result *= X;
+        }
+        
+        return result == Y;
+    }
+}
