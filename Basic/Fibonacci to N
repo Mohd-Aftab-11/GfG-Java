@@ -1,0 +1,25 @@
+class Solution {
+    ArrayList<Integer> nFibonacci(int N) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        if (N >= 0) {
+            result.add(0);
+        }
+        if (N >= 1) {
+            result.add(1);
+        }
+        
+        int a = 0, b = 1;
+        while (true) {
+            int next = a + b;
+            if (next > N) {
+                break;
+            }
+            result.add(next);
+            a = b;
+            b = next;
+        }
+        
+        return result;
+    }
+}
