@@ -1,0 +1,13 @@
+class Solution {
+    static int squaresInMatrix(int m, int n) {
+        int maxSquareSize = Math.min(m, n);
+        
+        long totalSquares = 0;
+        
+        for (int size = 1; size <= maxSquareSize; size++) {
+            totalSquares += (long)(m - size + 1) * (n - size + 1);
+        }
+        
+        return (int)totalSquares;
+    }
+}
