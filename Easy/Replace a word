@@ -1,0 +1,20 @@
+class Solution {
+    static String replaceAll(String str, String oldW, String newW) {
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        int n = str.length();
+        int oldLen = oldW.length();
+        
+        while (i < n) {
+            if (i <= n - oldLen && str.substring(i, i + oldLen).equals(oldW)) {
+                result.append(newW);
+                i += oldLen;
+            } else {
+                result.append(str.charAt(i));
+                i++;
+            }
+        }
+        
+        return result.toString();
+    }
+}
