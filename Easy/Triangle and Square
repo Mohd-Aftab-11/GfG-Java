@@ -1,0 +1,7 @@
+class Solution {
+    int countSquare(int B) {
+        int n = B / 2;
+        
+        return (n * (n - 1)) / 2;
+    }
+}
