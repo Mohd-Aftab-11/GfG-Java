@@ -1,0 +1,45 @@
+class Solution {
+    static int isSumPalindrome(int n) {
+        int iterations = 0;
+        int current = n;
+        
+        while (iterations <= 5) {
+            if (isPalindrome(current)) {
+                return current;
+            }
+            
+            if (iterations == 5) {
+                break;
+            }
+            
+            int reversed = reverseNumber(current);
+            current = current + reversed;
+            iterations++;
+        }
+        
+        return -1;
+    }
+    
+    static boolean isPalindrome(int num) {
+        int original = num;
+        int reversed = 0;
+        
+        while (num > 0) {
+            reversed = reversed * 10 + num % 10;
+            num /= 10;
+        }
+        
+        return original == reversed;
+    }
+    
+    static int reverseNumber(int num) {
+        int reversed = 0;
+        
+        while (num > 0) {
+            reversed = reversed * 10 + num % 10;
+            num /= 10;
+        }
+        
+        return reversed;
+    }
+}
