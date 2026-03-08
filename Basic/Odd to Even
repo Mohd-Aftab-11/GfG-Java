@@ -1,0 +1,39 @@
+class Solution {
+    public String makeEven(String s) {
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+        int lastDigit = arr[n-1] - '0';
+        
+        if (lastDigit % 2 == 0) {
+            return s;
+        }
+        
+        int swapIndex = -1;
+        
+        for (int i = 0; i < n-1; i++) {
+            int currDigit = arr[i] - '0';
+            if (currDigit % 2 == 0 && currDigit < lastDigit) {
+                swapIndex = i;
+                break;
+            }
+        }
+        
+        if (swapIndex == -1) {
+            for (int i = n-2; i >= 0; i--) {
+                int currDigit = arr[i] - '0';
+                if (currDigit % 2 == 0) {
+                    swapIndex = i;
+                    break;
+                }
+            }
+        }
+        
+        if (swapIndex != -1) {
+            char temp = arr[swapIndex];
+            arr[swapIndex] = arr[n-1];
+            arr[n-1] = temp;
+        }
+        
+        return new String(arr);
+    }
+}
