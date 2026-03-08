@@ -1,0 +1,28 @@
+class Solution {
+    public String reverseWords(String s) {
+        String[] words = s.split("\\.");
+        
+        StringBuilder result = new StringBuilder();
+        
+        for (int i = words.length - 1; i >= 0; i--) {
+            if (!words[i].isEmpty()) {
+                result.append(words[i]);
+                
+                if (i > 0) {
+                    boolean hasPrevValid = false;
+                    for (int j = i - 1; j >= 0; j--) {
+                        if (!words[j].isEmpty()) {
+                            hasPrevValid = true;
+                            break;
+                        }
+                    }
+                    if (hasPrevValid) {
+                        result.append(".");
+                    }
+                }
+            }
+        }
+        
+        return result.toString();
+    }
+}
