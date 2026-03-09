@@ -1,0 +1,25 @@
+class Solution {
+    public Node reverseCircular(Node head) {
+        if (head == null || head.next == head) {
+            return head;
+        }
+        
+        Node last = head;
+        while (last.next != head) {
+            last = last.next;
+        }
+        
+        Node prev = last;
+        Node current = head;
+        Node next;
+        
+        do {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        } while (current != head);
+        
+        return prev;
+    }
+}
