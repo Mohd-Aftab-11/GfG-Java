@@ -1,0 +1,52 @@
+class Solution {
+    public boolean isPalindrome(Node head) {
+        if (head == null || head.next == null) {
+            return true;
+        }
+        
+        Node slow = head;
+        Node fast = head;
+        
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        if (fast != null) {
+            slow = slow.next;
+        }
+        
+        Node secondHalf = reverseList(slow);
+        
+        Node firstHalf = head;
+        Node temp = secondHalf;
+        
+        boolean isPalindrome = true;
+        while (temp != null) {
+            if (firstHalf.data != temp.data) {
+                isPalindrome = false;
+                break;
+            }
+            firstHalf = firstHalf.next;
+            temp = temp.next;
+        }
+        
+        reverseList(secondHalf);
+        
+        return isPalindrome;
+    }
+    
+    private Node reverseList(Node head) {
+        Node prev = null;
+        Node current = head;
+        
+        while (current != null) {
+            Node next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        
+        return prev;
+    }
+}
