@@ -1,0 +1,34 @@
+class Solution {
+    public String largestSwap(String s) {
+        char[] chars = s.toCharArray();
+        int n = chars.length;
+        
+        int[] maxRight = new int[n];
+        int maxDigit = -1;
+        int maxIndex = -1;
+        
+        for (int i = n - 1; i >= 0; i--) {
+            int digit = chars[i] - '0';
+            if (digit > maxDigit) {
+                maxDigit = digit;
+                maxIndex = i;
+            }
+            maxRight[i] = maxIndex;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            int currentDigit = chars[i] - '0';
+            int bestIndex = maxRight[i];
+            int bestDigit = chars[bestIndex] - '0';
+            
+            if (bestDigit > currentDigit) {
+                char temp = chars[i];
+                chars[i] = chars[bestIndex];
+                chars[bestIndex] = temp;
+                return new String(chars);
+            }
+        }
+        
+        return s;
+    }
+}
