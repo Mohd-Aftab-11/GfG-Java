@@ -1,0 +1,35 @@
+class Solution {
+    public ArrayList<Integer> getKClosest(Node root, int target, int k) {
+        PriorityQueue<int[]> maxHeap = new PriorityQueue<>((a, b) -> {
+            if (a[0] != b[0]) {
+                return b[0] - a[0];
+            }
+            return b[1] - a[1];
+        });
+        
+        traverse(root, target, k, maxHeap);
+        
+        ArrayList<Integer> result = new ArrayList<>();
+        while (!maxHeap.isEmpty()) {
+            result.add(maxHeap.poll()[1]);
+        }
+        
+        Collections.sort(result);
+        return result;
+    }
+    
+    private void traverse(Node node, int target, int k, PriorityQueue<int[]> maxHeap) {
+        if (node == null) return;
+        
+        int diff = Math.abs(node.data - target);
+        
+        maxHeap.offer(new int[]{diff, node.data});
+        
+        if (maxHeap.size() > k) {
+            maxHeap.poll();
+        }
+        
+        traverse(node.left, target, k, maxHeap);
+        traverse(node.right, target, k, maxHeap);
+    }
+}
