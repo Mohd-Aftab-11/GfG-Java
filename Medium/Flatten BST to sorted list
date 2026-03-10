@@ -1,0 +1,37 @@
+class Solution {
+    private Node prev = null;
+    private Node newRoot = null;
+    
+    public Node flattenBST(Node root) {
+        if (root == null) {
+            return null;
+        }
+        
+        prev = null;
+        newRoot = null;
+        
+        inorderFlatten(root);
+        
+        return newRoot;
+    }
+    
+    private void inorderFlatten(Node node) {
+        if (node == null) {
+            return;
+        }
+        
+        inorderFlatten(node.left);
+        
+        if (prev == null) {
+            newRoot = node;
+        } else {
+            prev.right = node;
+        }
+        
+        node.left = null;
+        
+        prev = node;
+        
+        inorderFlatten(node.right);
+    }
+}
