@@ -1,0 +1,25 @@
+class Solution {
+    public ArrayList<ArrayList<Integer>> findInOutDegree(int V, int[][] edges) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        
+        for (int i = 0; i < V; i++) {
+            ArrayList<Integer> degrees = new ArrayList<>();
+            degrees.add(0);
+            degrees.add(0);
+            result.add(degrees);
+        }
+        
+        for (int[] edge : edges) {
+            int from = edge[0];
+            int to = edge[1];
+            
+            ArrayList<Integer> sourceDegrees = result.get(from);
+            sourceDegrees.set(1, sourceDegrees.get(1) + 1);
+            
+            ArrayList<Integer> destDegrees = result.get(to);
+            destDegrees.set(0, destDegrees.get(0) + 1);
+        }
+        
+        return result;
+    }
+}
