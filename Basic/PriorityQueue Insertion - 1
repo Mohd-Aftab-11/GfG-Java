@@ -1,0 +1,11 @@
+class Solution {
+    public static PriorityQueue<Integer> insertion(ArrayList<Integer> arr) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        
+        for (Integer num : arr) {
+            pq.offer(num);
+        }
+        
+        return pq;
+    }
+}
