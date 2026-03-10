@@ -1,0 +1,52 @@
+class Solution {
+    public int minTime(int[] ranks, int n) {
+        if (n == 0) return 0;
+        
+        int left = 1;
+        int right = Integer.MAX_VALUE;
+        right = 2000000000;
+        
+        int answer = right;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (canMake(ranks, n, mid)) {
+                answer = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return answer;
+    }
+    
+    private boolean canMake(int[] ranks, int n, int time) {
+        long totalDonuts = 0;
+        
+        for (int rank : ranks) {
+            int low = 0;
+            int high = 2000000;
+            
+            while (low <= high) {
+                int mid = low + (high - low) / 2;
+                
+                long timeNeeded = (long) rank * mid * (mid + 1) / 2;
+                
+                if (timeNeeded <= time) {
+                    low = mid + 1;
+                } else {
+                    high = mid - 1;
+                }
+            }
+            
+            totalDonuts += high;
+            if (totalDonuts >= n) {
+                return true;
+            }
+        }
+        
+        return totalDonuts >= n;
+    }
+}
