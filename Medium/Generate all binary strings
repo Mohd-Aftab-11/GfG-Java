@@ -1,0 +1,19 @@
+import java.util.*;
+
+class Solution {
+    public ArrayList<String> binstr(int n) {
+        ArrayList<String> result = new ArrayList<>();
+        generateStrings(n, "", result);
+        return result;
+    }
+    
+    private void generateStrings(int n, String current, ArrayList<String> result) {
+        if (current.length() == n) {
+            result.add(current);
+            return;
+        }
+        
+        generateStrings(n, current + "0", result);
+        generateStrings(n, current + "1", result);
+    }
+}
