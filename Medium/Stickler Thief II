@@ -1,0 +1,27 @@
+class Solution {
+    public int maxValue(int[] arr) {
+        int n = arr.length;
+        
+        if (n == 1) return arr[0];
+        if (n == 2) return Math.max(arr[0], arr[1]);
+        
+        int max1 = robLinear(arr, 0, n - 2);
+        
+        int max2 = robLinear(arr, 1, n - 1);
+        
+        return Math.max(max1, max2);
+    }
+    
+    private int robLinear(int[] arr, int start, int end) {
+        int prev2 = 0;
+        int prev1 = 0;
+        
+        for (int i = start; i <= end; i++) {
+            int current = Math.max(prev1, prev2 + arr[i]);
+            prev2 = prev1;
+            prev1 = current;
+        }
+        
+        return prev1;
+    }
+}
