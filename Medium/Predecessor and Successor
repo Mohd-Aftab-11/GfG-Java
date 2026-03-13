@@ -1,0 +1,47 @@
+class Solution {
+    public ArrayList<Node> findPreSuc(Node root, int key) {
+        ArrayList<Node> result = new ArrayList<>();
+        
+        Node[] pre = new Node[1];
+        Node[] suc = new Node[1];
+        
+        findPreSucUtil(root, key, pre, suc);
+        
+        result.add(pre[0]);
+        result.add(suc[0]);
+        
+        return result;
+    }
+    
+    private void findPreSucUtil(Node root, int key, Node[] pre, Node[] suc) {
+        if (root == null) return;
+        
+        if (root.data == key) {
+            if (root.left != null) {
+                Node temp = root.left;
+                while (temp.right != null) {
+                    temp = temp.right;
+                }
+                pre[0] = temp;
+            }
+            
+            if (root.right != null) {
+                Node temp = root.right;
+                while (temp.left != null) {
+                    temp = temp.left;
+                }
+                suc[0] = temp;
+            }
+            return;
+        }
+        
+        if (key < root.data) {
+            suc[0] = root;
+            findPreSucUtil(root.left, key, pre, suc);
+        }
+        else {
+            pre[0] = root;
+            findPreSucUtil(root.right, key, pre, suc);
+        }
+    }
+}
