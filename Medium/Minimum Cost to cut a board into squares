@@ -1,0 +1,49 @@
+class Solution {
+    public static int minCost(int n, int m, int[] x, int[] y) {
+        Integer[] xCosts = new Integer[x.length];
+        Integer[] yCosts = new Integer[y.length];
+        
+        for (int i = 0; i < x.length; i++) {
+            xCosts[i] = x[i];
+        }
+        for (int i = 0; i < y.length; i++) {
+            yCosts[i] = y[i];
+        }
+        
+        Arrays.sort(xCosts, Collections.reverseOrder());
+        Arrays.sort(yCosts, Collections.reverseOrder());
+        
+        int totalCost = 0;
+        int horizontalSegments = 1;
+        int verticalSegments = 1;
+        
+        int i = 0;
+        int j = 0;
+        
+        while (i < xCosts.length && j < yCosts.length) {
+            if (xCosts[i] >= yCosts[j]) {
+                totalCost += xCosts[i] * horizontalSegments;
+                verticalSegments++;
+                i++;
+            } else {
+                totalCost += yCosts[j] * verticalSegments;
+                horizontalSegments++;
+                j++;
+            }
+        }
+        
+        while (i < xCosts.length) {
+            totalCost += xCosts[i] * horizontalSegments;
+            verticalSegments++;
+            i++;
+        }
+        
+        while (j < yCosts.length) {
+            totalCost += yCosts[j] * verticalSegments;
+            horizontalSegments++;
+            j++;
+        }
+        
+        return totalCost;
+    }
+}
