@@ -1,0 +1,30 @@
+class Solution {
+    Node mergeKLists(Node[] arr) {
+        if (arr == null || arr.length == 0) return null;
+        
+        PriorityQueue<Node> minHeap = new PriorityQueue<>(
+            (a, b) -> a.data - b.data
+        );
+        
+        for (Node listHead : arr) {
+            if (listHead != null) {
+                minHeap.offer(listHead);
+            }
+        }
+        
+        Node dummy = new Node(0);
+        Node current = dummy;
+        
+        while (!minHeap.isEmpty()) {
+            Node smallest = minHeap.poll();
+            current.next = smallest;
+            current = current.next;
+            
+            if (smallest.next != null) {
+                minHeap.offer(smallest.next);
+            }
+        }
+        
+        return dummy.next;
+    }
+}
