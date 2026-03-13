@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    public int minOperations(int[] arr) {
+        double totalSum = 0;
+        for (int num : arr) {
+            totalSum += num;
+        }
+        
+        double target = totalSum / 2;
+        double currentSum = totalSum;
+        int operations = 0;
+        
+        PriorityQueue<Double> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for (int num : arr) {
+            maxHeap.offer((double) num);
+        }
+        
+        while (currentSum > target) {
+            double largest = maxHeap.poll();
+            double halved = largest / 2;
+            
+            currentSum = currentSum - largest + halved;
+            operations++;
+            
+            maxHeap.offer(halved);
+        }
+        return operations;
+    }
+}
