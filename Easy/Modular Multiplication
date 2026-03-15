@@ -1,0 +1,11 @@
+class Solution {
+    public int modmul(int a, int b, int M) {
+        long result = 0;
+        long A = a % M;
+        long B = b;
+        
+        result = (A * (B % M)) % M;
+        
+        return (int)result;
+    }
+}
