@@ -1,0 +1,42 @@
+import java.util.*;
+
+class Tree {
+    ArrayList<Integer> postOrder(Node node) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        if (node == null) {
+            return result;
+        }
+        
+        // Stack for traversal
+        Stack<Node> stack1 = new Stack<>();
+        // Stack for storing postorder sequence
+        Stack<Node> stack2 = new Stack<>();
+        
+        // Push root to first stack
+        stack1.push(node);
+        
+        // Process nodes
+        while (!stack1.isEmpty()) {
+            // Pop from stack1 and push to stack2
+            Node current = stack1.pop();
+            stack2.push(current);
+            
+            // Push left and right children to stack1
+            // Note: Left is pushed first because stack2 will reverse the order
+            if (current.left != null) {
+                stack1.push(current.left);
+            }
+            if (current.right != null) {
+                stack1.push(current.right);
+            }
+        }
+        
+        // Pop from stack2 to get postorder sequence
+        while (!stack2.isEmpty()) {
+            result.add(stack2.pop().data);
+        }
+        
+        return result;
+    }
+}
