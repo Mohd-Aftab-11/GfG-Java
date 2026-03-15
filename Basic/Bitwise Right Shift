@@ -1,0 +1,7 @@
+class Solution {
+    public static void rightShift(int a, int b) {
+        int result = a >> b;
+        
+        System.out.println(result);
+    }
+}
