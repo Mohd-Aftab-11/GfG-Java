@@ -1,0 +1,17 @@
+class Solution {
+    public Node insertAtBeginning(Node tail, int key) {
+        Node newNode = new Node(key);
+        
+        if (tail == null) {
+            newNode.next = newNode;
+            return newNode;
+        }
+        
+        Node head = tail.next;
+        
+        newNode.next = head;
+        tail.next = newNode;
+        
+        return newNode;
+    }
+}
