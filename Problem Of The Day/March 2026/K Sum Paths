@@ -1,0 +1,34 @@
+class Solution {
+    private int count = 0;
+    private int target;
+    private Map<Long, Integer> prefixSumCount;
+    
+    public int countAllPaths(Node root, int k) {
+        this.target = k;
+        this.prefixSumCount = new HashMap<>();
+        prefixSumCount.put(0L, 1);
+        
+        dfs(root, 0L);
+        return count;
+    }
+    
+    private void dfs(Node node, long currentSum) {
+        if (node == null) {
+            return;
+        }
+        
+        currentSum += node.data;
+        
+        count += prefixSumCount.getOrDefault(currentSum - target, 0);
+        
+        prefixSumCount.put(currentSum, prefixSumCount.getOrDefault(currentSum, 0) + 1);
+        
+        dfs(node.left, currentSum);
+        dfs(node.right, currentSum);
+        
+        prefixSumCount.put(currentSum, prefixSumCount.get(currentSum) - 1);
+        if (prefixSumCount.get(currentSum) == 0) {
+            prefixSumCount.remove(currentSum);
+        }
+    }
+}
