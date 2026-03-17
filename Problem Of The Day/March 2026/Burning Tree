@@ -1,0 +1,76 @@
+class Solution {
+    public int minTime(Node root, int target) {
+        if (root == null) return 0;
+        
+        Map<Node, Node> parentMap = new HashMap<>();
+        Node targetNode = buildParentMapAndFindTarget(root, target, parentMap);
+        
+        Queue<Node> queue = new LinkedList<>();
+        Set<Node> visited = new HashSet<>();
+        
+        queue.offer(targetNode);
+        visited.add(targetNode);
+        
+        int time = 0;
+        
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            boolean burnedAny = false;
+            
+            for (int i = 0; i < size; i++) {
+                Node current = queue.poll();
+                
+                if (current.left != null && !visited.contains(current.left)) {
+                    visited.add(current.left);
+                    queue.offer(current.left);
+                    burnedAny = true;
+                }
+                
+                if (current.right != null && !visited.contains(current.right)) {
+                    visited.add(current.right);
+                    queue.offer(current.right);
+                    burnedAny = true;
+                }
+                
+                Node parent = parentMap.get(current);
+                if (parent != null && !visited.contains(parent)) {
+                    visited.add(parent);
+                    queue.offer(parent);
+                    burnedAny = true;
+                }
+            }
+            
+            if (burnedAny) {
+                time++;
+            }
+        }
+        
+        return time;
+    }
+    
+    private Node buildParentMapAndFindTarget(Node root, int target, Map<Node, Node> parentMap) {
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        Node targetNode = null;
+        
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            
+            if (current.data == target) {
+                targetNode = current;
+            }
+            
+            if (current.left != null) {
+                parentMap.put(current.left, current);
+                queue.offer(current.left);
+            }
+            
+            if (current.right != null) {
+                parentMap.put(current.right, current);
+                queue.offer(current.right);
+            }
+        }
+        
+        return targetNode;
+    }
+}
