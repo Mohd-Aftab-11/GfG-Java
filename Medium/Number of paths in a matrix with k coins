@@ -1,0 +1,36 @@
+class Solution {
+    public int numberOfPath(int[][] mat, int k) {
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        int[][][] dp = new int[n][m][k + 1];
+        
+        int startCoins = mat[0][0];
+        if (startCoins <= k) {
+            dp[0][0][startCoins] = 1;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                for (int s = 0; s <= k; s++) {
+                    if (dp[i][j][s] > 0) {
+                        if (j + 1 < m) {
+                            int newSum = s + mat[i][j + 1];
+                            if (newSum <= k) {
+                                dp[i][j + 1][newSum] += dp[i][j][s];
+                            }
+                        }
+                        if (i + 1 < n) {
+                            int newSum = s + mat[i + 1][j];
+                            if (newSum <= k) {
+                                dp[i + 1][j][newSum] += dp[i][j][s];
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return dp[n - 1][m - 1][k];
+    }
+}
