@@ -1,0 +1,22 @@
+class Solution {
+    private int moves;
+    
+    public int distCandy(Node root) {
+        moves = 0;
+        dfs(root);
+        return moves;
+    }
+    
+    private int dfs(Node node) {
+        if (node == null) return 0;
+        
+        int leftExcess = dfs(node.left);
+        int rightExcess = dfs(node.right);
+        
+        int currentExcess = node.data - 1 + leftExcess + rightExcess;
+        
+        moves += Math.abs(currentExcess);
+        
+        return currentExcess;
+    }
+}
