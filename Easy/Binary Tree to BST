@@ -1,0 +1,40 @@
+class Solution {
+    private int index = 0;
+    
+    Node binaryTreeToBST(Node root) {
+        if (root == null) {
+            return null;
+        }
+        
+        List<Integer> values = new ArrayList<>();
+        extractValues(root, values);
+        
+        Collections.sort(values);
+        
+        index = 0;
+        convertToBST(root, values);
+        
+        return root;
+    }
+    
+    private void extractValues(Node node, List<Integer> values) {
+        if (node == null) {
+            return;
+        }
+        values.add(node.data);
+        extractValues(node.left, values);
+        extractValues(node.right, values);
+    }
+    
+    private void convertToBST(Node node, List<Integer> sortedValues) {
+        if (node == null) {
+            return;
+        }
+        
+        convertToBST(node.left, sortedValues);
+        
+        node.data = sortedValues.get(index++);
+        
+        convertToBST(node.right, sortedValues);
+    }
+}
