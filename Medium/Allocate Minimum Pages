@@ -1,0 +1,56 @@
+class Solution {
+    public int findPages(int[] arr, int k) {
+        int n = arr.length;
+        
+        if (k > n) {
+            return -1;
+        }
+        
+        int totalPages = 0;
+        int maxPage = 0;
+        for (int pages : arr) {
+            totalPages += pages;
+            maxPage = Math.max(maxPage, pages);
+        }
+        
+        int left = maxPage;
+        int right = totalPages;
+        int result = -1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (isValid(arr, k, mid)) {
+                result = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return result;
+    }
+    
+    private boolean isValid(int[] arr, int k, int maxPagesPerStudent) {
+        int students = 1;
+        int currentPages = 0;
+        
+        for (int pages : arr) {
+            if (pages > maxPagesPerStudent) {
+                return false;
+            }
+            
+            if (currentPages + pages > maxPagesPerStudent) {
+                students++;
+                currentPages = pages;
+                
+                if (students > k) {
+                    return false;
+                }
+            } else {
+                currentPages += pages;
+            }
+        }
+        return true;
+    }
+}
