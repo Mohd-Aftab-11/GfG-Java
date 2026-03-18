@@ -1,0 +1,53 @@
+class Solution {
+    public void fill(char[][] grid) {
+        if (grid == null || grid.length == 0) {
+            return;
+        }
+        
+        int n = grid.length;
+        int m = grid[0].length;
+        
+        for (int j = 0; j < m; j++) {
+            if (grid[0][j] == 'O') {
+                dfs(grid, 0, j, n, m);
+            }
+            if (grid[n-1][j] == 'O') {
+                dfs(grid, n-1, j, n, m);
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (grid[i][0] == 'O') {
+                dfs(grid, i, 0, n, m);
+            }
+            if (grid[i][m-1] == 'O') {
+                dfs(grid, i, m-1, n, m);
+            }
+        }
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 'O') {
+                    grid[i][j] = 'X';
+                } else if (grid[i][j] == 'B') {
+                    grid[i][j] = 'O';
+                }
+            }
+        }
+    }
+    
+    private void dfs(char[][] grid, int row, int col, int n, int m) {
+        if (row < 0 || row >= n || col < 0 || col >= m || grid[row][col] != 'O') {
+            return;
+        }
+        
+        grid[row][col] = 'B';
+        
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+        
+        for (int k = 0; k < 4; k++) {
+            dfs(grid, row + dx[k], col + dy[k], n, m);
+        }
+    }
+}
