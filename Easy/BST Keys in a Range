@@ -1,0 +1,25 @@
+class Solution {
+    public static ArrayList<Integer> printNearNodes(Node root, int low, int high) {
+        ArrayList<Integer> result = new ArrayList<>();
+        inorderTraversal(root, low, high, result);
+        return result;
+    }
+    
+    private static void inorderTraversal(Node node, int low, int high, ArrayList<Integer> result) {
+        if (node == null) {
+            return;
+        }
+        
+        if (node.data > low) {
+            inorderTraversal(node.left, low, high, result);
+        }
+        
+        if (node.data >= low && node.data <= high) {
+            result.add(node.data);
+        }
+        
+        if (node.data < high) {
+            inorderTraversal(node.right, low, high, result);
+        }
+    }
+}
