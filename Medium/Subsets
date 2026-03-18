@@ -1,0 +1,23 @@
+class Solution {
+    public ArrayList<ArrayList<Integer>> subsets(int arr[]) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        
+        Arrays.sort(arr);
+        
+        generateSubsets(arr, 0, new ArrayList<>(), result);
+        
+        return result;
+    }
+    
+    private void generateSubsets(int[] arr, int index, ArrayList<Integer> current, ArrayList<ArrayList<Integer>> result) {
+        result.add(new ArrayList<>(current));
+        
+        for (int i = index; i < arr.length; i++) {
+            current.add(arr[i]);
+            
+            generateSubsets(arr, i + 1, current, result);
+            
+            current.remove(current.size() - 1);
+        }
+    }
+}
