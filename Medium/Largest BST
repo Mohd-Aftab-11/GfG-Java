@@ -1,0 +1,51 @@
+class Solution {
+    static class NodeInfo {
+        boolean isBST;
+        int min;
+        int max;
+        int size;
+        
+        NodeInfo(boolean isBST, int min, int max, int size) {
+            this.isBST = isBST;
+            this.min = min;
+            this.max = max;
+            this.size = size;
+        }
+    }
+    
+    static int maxBSTSize;
+    
+    static int largestBst(Node root) {
+        maxBSTSize = 0;
+        traverse(root);
+        return maxBSTSize;
+    }
+    
+    static NodeInfo traverse(Node node) {
+        if (node == null) {
+            return new NodeInfo(true, Integer.MAX_VALUE, Integer.MIN_VALUE, 0);
+        }
+        
+        NodeInfo left = traverse(node.left);
+        NodeInfo right = traverse(node.right);
+        
+        boolean isBST = false;
+        int min = node.data;
+        int max = node.data;
+        int size = 1 + left.size + right.size;
+        
+        if (left.isBST && right.isBST && 
+            (node.left == null || left.max < node.data) && 
+            (node.right == null || right.min > node.data)) {
+            
+            isBST = true;
+            
+            min = Math.min(node.data, left.min);
+            max = Math.max(node.data, right.max);
+            
+            maxBSTSize = Math.max(maxBSTSize, size);
+        }
+        
+        return new NodeInfo(isBST, min, max, size);
+    }
+}
