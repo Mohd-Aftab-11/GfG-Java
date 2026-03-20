@@ -1,0 +1,33 @@
+class Solution {
+    public int findNum(int n) {
+        if (n == 0) return 0;
+        
+        int left = 0;
+        int right = 5 * n;
+        
+        int result = -1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (countTrailingZeros(mid) >= n) {
+                result = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return result;
+    }
+    
+    private int countTrailingZeros(int num) {
+        int count = 0;
+        
+        for (long i = 5; num / i > 0; i *= 5) {
+            count += num / i;
+        }
+        
+        return count;
+    }
+}
