@@ -1,0 +1,42 @@
+class Solution {
+    public int minRemovals(int[] arr, int k) {
+        int n = arr.length;
+        long totalSum = 0;
+        
+        for (int num : arr) {
+            totalSum += num;
+        }
+        
+        if (k > totalSum) {
+            return -1;
+        }
+        
+        if (k == totalSum) {
+            return n;
+        }
+        
+        long targetSum = totalSum - k;
+        int maxLen = 0;
+        long currentSum = 0;
+        int left = 0;
+        
+        for (int right = 0; right < n; right++) {
+            currentSum += arr[right];
+            
+            while (currentSum > targetSum && left <= right) {
+                currentSum -= arr[left];
+                left++;
+            }
+            
+            if (currentSum == targetSum) {
+                maxLen = Math.max(maxLen, right - left + 1);
+            }
+        }
+        
+        if (maxLen > 0) {
+            return n - maxLen;
+        }
+        
+        return -1;
+    }
+}
