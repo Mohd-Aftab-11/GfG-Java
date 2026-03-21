@@ -1,0 +1,41 @@
+class Solution {
+    Node head = null;
+    Node prev = null;
+    
+    Node bTreeToCList(Node root) {
+        if (root == null) {
+            return null;
+        }
+        
+        head = null;
+        prev = null;
+        
+        convertToCDLL(root);
+        
+        if (head != null && prev != null) {
+            head.left = prev;
+            prev.right = head;
+        }
+        
+        return head;
+    }
+    
+    private void convertToCDLL(Node root) {
+        if (root == null) {
+            return;
+        }
+        
+        convertToCDLL(root.left);
+        
+        if (prev == null) {
+            head = root;
+        } else {
+            prev.right = root;
+            root.left = prev;
+        }
+        
+        prev = root;
+        
+        convertToCDLL(root.right);
+    }
+}
