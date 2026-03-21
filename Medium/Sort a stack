@@ -1,0 +1,30 @@
+class Solution {
+    public void sortStack(Stack<Integer> st) {
+        if (st.isEmpty()) {
+            return;
+        }
+        
+        int top = st.pop();
+        
+        sortStack(st);
+        
+        insertInSortedOrder(st, top);
+    }
+    
+    private void insertInSortedOrder(Stack<Integer> st, int element) {
+        if (st.isEmpty()) {
+            st.push(element);
+            return;
+        }
+        
+        if (st.peek() <= element) {
+            st.push(element);
+            return;
+        }
+        
+        int top = st.pop();
+        insertInSortedOrder(st, element);
+        
+        st.push(top);
+    }
+}
