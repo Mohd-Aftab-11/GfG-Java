@@ -1,0 +1,45 @@
+class Solution {
+    public ArrayList<ArrayList<Integer>> nQueen(int n) {
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        if (n == 0) return result;
+        
+        boolean[] col = new boolean[n];
+        boolean[] diag1 = new boolean[2 * n - 1];
+        boolean[] diag2 = new boolean[2 * n - 1];
+        
+        int[] current = new int[n];
+        
+        solve(0, n, current, col, diag1, diag2, result);
+        
+        return result;
+    }
+    
+    private void solve(int row, int n, int[] current, boolean[] col, boolean[] diag1, boolean[] diag2,ArrayList<ArrayList<Integer>> result) {
+        if (row == n) {
+            ArrayList<Integer> solution = new ArrayList<>();
+            for (int i = 0; i < n; i++) {
+                solution.add(current[i] + 1);
+            }
+            result.add(solution);
+            return;
+        }
+        
+        for (int j = 0; j < n; j++) {
+            int d1 = row + j;
+            int d2 = row - j + (n - 1);
+            
+            if (!col[j] && !diag1[d1] && !diag2[d2]) {
+                current[row] = j;
+                col[j] = true;
+                diag1[d1] = true;
+                diag2[d2] = true;
+                
+                solve(row + 1, n, current, col, diag1, diag2, result);
+                
+                col[j] = false;
+                diag1[d1] = false;
+                diag2[d2] = false;
+            }
+        }
+    }
+}
