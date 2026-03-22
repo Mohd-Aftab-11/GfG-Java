@@ -1,0 +1,34 @@
+import java.util.*;
+
+class Solution {
+    private Map<Integer, Integer> inorderMap;
+    private int postIndex;
+    
+    Node buildTree(int[] inorder, int[] postorder) {
+        inorderMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            inorderMap.put(inorder[i], i);
+        }
+        
+        postIndex = postorder.length - 1;
+        
+        return buildTreeHelper(postorder, 0, inorder.length - 1);
+    }
+    
+    private Node buildTreeHelper(int[] postorder, int inStart, int inEnd) {
+        if (inStart > inEnd) {
+            return null;
+        }
+        
+        int rootVal = postorder[postIndex];
+        postIndex--;
+        Node root = new Node(rootVal);
+        
+        int inIndex = inorderMap.get(rootVal);
+        
+        root.right = buildTreeHelper(postorder, inIndex + 1, inEnd);
+        root.left = buildTreeHelper(postorder, inStart, inIndex - 1);
+        
+        return root;
+    }
+}
