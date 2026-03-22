@@ -1,0 +1,30 @@
+class Solution {
+    public int[] matrixDiagonally(int[][] mat) {
+        int n = mat.length;
+        int[] result = new int[n * n];
+        int index = 0;
+        
+        for (int diag = 0; diag < 2 * n - 1; diag++) {
+            if (diag % 2 == 0) {
+                int row = Math.min(diag, n - 1);
+                int col = diag - row;
+                
+                while (row >= 0 && col < n) {
+                    result[index++] = mat[row][col];
+                    row--;
+                    col++;
+                }
+            } else {
+                int col = Math.min(diag, n - 1);
+                int row = diag - col;
+                
+                while (row < n && col >= 0) {
+                    result[index++] = mat[row][col];
+                    row++;
+                    col--;
+                }
+            }
+        }
+        return result;
+    }
+}
