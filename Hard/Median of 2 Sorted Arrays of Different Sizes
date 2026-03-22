@@ -1,0 +1,40 @@
+class Solution {
+    public double medianOf2(int a[], int b[]) {
+        if (a.length > b.length) {
+            return medianOf2(b, a);
+        }
+        
+        int m = a.length;
+        int n = b.length;
+        int total = m + n;
+        int half = (total + 1) / 2;
+        
+        int left = 0;
+        int right = m;
+        
+        while (left <= right) {
+            int partitionA = (left + right) / 2;
+            int partitionB = half - partitionA;
+            
+            int leftA = (partitionA > 0) ? a[partitionA - 1] : Integer.MIN_VALUE;
+            int rightA = (partitionA < m) ? a[partitionA] : Integer.MAX_VALUE;
+            int leftB = (partitionB > 0) ? b[partitionB - 1] : Integer.MIN_VALUE;
+            int rightB = (partitionB < n) ? b[partitionB] : Integer.MAX_VALUE;
+            
+            if (leftA <= rightB && leftB <= rightA) {
+                if (total % 2 == 1) {
+                    return Math.max(leftA, leftB);
+                } else {
+                    return (Math.max(leftA, leftB) + Math.min(rightA, rightB)) / 2.0;
+                }
+            }
+            else if (leftA > rightB) {
+                right = partitionA - 1;
+            } else {
+                left = partitionA + 1;
+            }
+        }
+        
+        return 0.0;
+    }
+}
