@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Solution {
+    public Node cloneLinkedList(Node head) {
+        if (head == null) {
+            return null;
+        }
+        
+        Map<Node, Node> map = new HashMap<>();
+        
+        Node current = head;
+        while (current != null) {
+            map.put(current, new Node(current.data));
+            current = current.next;
+        }
+        
+        current = head;
+        while (current != null) {
+            Node clonedNode = map.get(current);
+            clonedNode.next = map.get(current.next);
+            clonedNode.random = map.get(current.random);
+            current = current.next;
+        }
+        return map.get(head);
+    }
+}
