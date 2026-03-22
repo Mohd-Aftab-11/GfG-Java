@@ -1,0 +1,32 @@
+class Solution {
+    public ArrayList<ArrayList<String>> anagrams(String[] arr) {
+        HashMap<String, ArrayList<String>> map = new HashMap<>();
+        
+        for (String str : arr) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String sortedStr = new String(chars);
+            
+            if (!map.containsKey(sortedStr)) {
+                map.put(sortedStr, new ArrayList<>());
+            }
+            map.get(sortedStr).add(str);
+        }
+        
+        ArrayList<ArrayList<String>> result = new ArrayList<>();
+        
+        HashSet<String> processed = new HashSet<>();
+        
+        for (String str : arr) {
+            char[] chars = str.toCharArray();
+            Arrays.sort(chars);
+            String key = new String(chars);
+            
+            if (!processed.contains(key)) {
+                result.add(map.get(key));
+                processed.add(key);
+            }
+        }
+        return result;
+    }
+}
