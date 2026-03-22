@@ -1,0 +1,32 @@
+class Solution {
+    public Node linkedListToBinaryTree(NodeLL head) {
+        if (head == null) {
+            return null;
+        }
+        
+        Node root = new Node(head.data);
+        
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        
+        NodeLL current = head.next;
+        
+        while (current != null) {
+            Node parent = queue.poll();
+            
+            Node leftChild = new Node(current.data);
+            parent.left = leftChild;
+            queue.offer(leftChild);
+            
+            current = current.next;
+            
+            if (current != null) {
+                Node rightChild = new Node(current.data);
+                parent.right = rightChild;
+                queue.offer(rightChild);
+                current = current.next;
+            }
+        }
+        return root;
+    }
+}
