@@ -1,0 +1,22 @@
+class Solution {
+    private static int sum = 0;
+    
+    public static void transformTree(Node root) {
+        sum = 0;
+        reverseInorderTraversal(root);
+    }
+    
+    private static void reverseInorderTraversal(Node root) {
+        if (root == null) {
+            return;
+        }
+        
+        reverseInorderTraversal(root.right);
+        
+        int nodeValue = root.data;
+        root.data = sum;
+        sum += nodeValue;
+        
+        reverseInorderTraversal(root.left);
+    }
+}
