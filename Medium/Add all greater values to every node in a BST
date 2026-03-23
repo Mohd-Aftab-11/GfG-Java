@@ -1,0 +1,21 @@
+class Solution {
+    private int sum = 0;
+    
+    public Node modify(Node root) {
+        reverseInorder(root);
+        return root;
+    }
+    
+    private void reverseInorder(Node node) {
+        if (node == null) return;
+        
+        reverseInorder(node.right);
+        
+        int originalValue = node.data;
+        node.data += sum;
+        
+        sum += originalValue;
+        
+        reverseInorder(node.left);
+    }
+}
