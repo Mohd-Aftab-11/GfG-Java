@@ -1,0 +1,47 @@
+class GfG {
+    private Stack<Integer> stack = new Stack<>();
+    private int min;
+    
+    public void push(int a, Stack<Integer> s) {
+        if (isEmpty(s)) {
+            min = a;
+            s.push(a);
+        } else {
+            if (a < min) {
+                s.push(2 * a - min);
+                min = a;
+            } else {
+                s.push(a);
+            }
+        }
+    }
+
+    public int pop(Stack<Integer> s) {
+        if (isEmpty(s)) return -1;
+        
+        int top = s.pop();
+        int result;
+        
+        if (top < min) {
+            result = min;
+            min = 2 * min - top;
+        } else {
+            result = top;
+        }
+        
+        return result;
+    }
+
+    public int min(Stack<Integer> s) {
+        if (isEmpty(s)) return -1;
+        return min;
+    }
+
+    public boolean isFull(Stack<Integer> s, int n) {
+        return s.size() == n;
+    }
+
+    public boolean isEmpty(Stack<Integer> s) {
+        return s.isEmpty();
+    }
+}
