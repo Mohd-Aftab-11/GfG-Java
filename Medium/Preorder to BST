@@ -1,0 +1,23 @@
+class Solution {
+    private int index = 0;
+    
+    public Node Bst(int pre[], int size) {
+        index = 0;
+        return constructBST(pre, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    
+    private Node constructBST(int[] pre, int min, int max) {
+        if (index >= pre.length) return null;
+        
+        int val = pre[index];
+        if (val < min || val > max) return null;
+        
+        index++;
+        Node node = new Node(val);
+        
+        node.left = constructBST(pre, min, val);
+        node.right = constructBST(pre, val, max);
+        
+        return node;
+    }
+}
