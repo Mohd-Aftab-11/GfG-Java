@@ -1,0 +1,18 @@
+class Solution {
+    static Boolean isSubsetSum(int arr[], int sum) {
+        int n = arr.length;
+        
+        boolean[] dp = new boolean[sum + 1];
+        
+        dp[0] = true;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = sum; j >= arr[i]; j--) {
+                if (dp[j - arr[i]]) {
+                    dp[j] = true;
+                }
+            }
+        }
+        return dp[sum];
+    }
+}
