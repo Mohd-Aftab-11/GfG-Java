@@ -1,0 +1,25 @@
+class Solution {
+    ArrayList<String> permutation(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        generateCombinations(s, 0, new StringBuilder(), result);
+        Collections.sort(result);
+        return result;
+    }
+    
+    private void generateCombinations(String s, int index, StringBuilder current, ArrayList<String> result) {
+        if (index == s.length()) {
+            result.add(current.toString());
+            return;
+        }
+        
+        current.append(s.charAt(index));
+        generateCombinations(s, index + 1, current, result);
+        current.deleteCharAt(current.length() - 1);
+        
+        if (index > 0) {
+            current.append(" ").append(s.charAt(index));
+            generateCombinations(s, index + 1, current, result);
+            current.delete(current.length() - 2, current.length());
+        }
+    }
+}
