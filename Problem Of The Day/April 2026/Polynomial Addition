@@ -1,0 +1,42 @@
+class Solution {
+    public static Node addPolynomial(Node head1, Node head2) {
+        Node dummy = new Node(0, 0);
+        Node current = dummy;
+        
+        Node p1 = head1;
+        Node p2 = head2;
+        
+        while (p1 != null && p2 != null) {
+            if (p1.pow > p2.pow) {
+                current.next = new Node(p1.coeff, p1.pow);
+                current = current.next;
+                p1 = p1.next;
+            } 
+            else if (p1.pow < p2.pow) {
+                current.next = new Node(p2.coeff, p2.pow);
+                current = current.next;
+                p2 = p2.next;
+            } 
+            else {
+                int sum = p1.coeff + p2.coeff;
+                if (sum != 0) {
+                    current.next = new Node(sum, p1.pow);
+                    current = current.next;
+                }
+                p1 = p1.next;
+                p2 = p2.next;
+            }
+        }
+        while (p1 != null) {
+            current.next = new Node(p1.coeff, p1.pow);
+            current = current.next;
+            p1 = p1.next;
+        }
+        while (p2 != null) {
+            current.next = new Node(p2.coeff, p2.pow);
+            current = current.next;
+            p2 = p2.next;
+        }
+        return dummy.next;
+    }
+}
