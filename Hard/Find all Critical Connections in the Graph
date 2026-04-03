@@ -1,0 +1,49 @@
+class Solution {
+    private int time = 0;
+    
+    public ArrayList<ArrayList<Integer>> criticalConnections(int v, ArrayList<ArrayList<Integer>> adj) {
+        
+        int[] disc = new int[v];
+        int[] low = new int[v];
+        boolean[] visited = new boolean[v];
+        
+        ArrayList<ArrayList<Integer>> bridges = new ArrayList<>();
+        
+        Arrays.fill(disc, -1);
+        
+        dfs(0, -1, disc, low, visited, adj, bridges);
+        
+        bridges.sort((a, b) -> {
+            if (a.get(0).equals(b.get(0))) {
+                return a.get(1) - b.get(1);
+            }
+            return a.get(0) - b.get(0);
+        });
+        return bridges;
+    }
+    
+    private void dfs(int u, int parent, int[] disc, int[] low, boolean[] visited, ArrayList<ArrayList<Integer>> adj, ArrayList<ArrayList<Integer>> bridges) {
+        
+        visited[u] = true;
+        disc[u] = low[u] = ++time;
+        
+        for (int v : adj.get(u)) {
+            if (v == parent) continue;
+            
+            if (!visited[v]) {
+                dfs(v, u, disc, low, visited, adj, bridges);
+                
+                low[u] = Math.min(low[u], low[v]);
+                
+                if (low[v] > disc[u]) {
+                    ArrayList<Integer> bridge = new ArrayList<>();
+                    bridge.add(Math.min(u, v));
+                    bridge.add(Math.max(u, v));
+                    bridges.add(bridge);
+                }
+            } else {
+                low[u] = Math.min(low[u], disc[v]);
+            }
+        }
+    }
+}
