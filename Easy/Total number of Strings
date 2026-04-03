@@ -1,0 +1,11 @@
+class Solution {
+    public int no_ofString(int n) {
+        long MOD = 1_000_000_007;
+        long ans = 1 + 2L * n;
+        ans %= MOD;
+        ans = (ans + (long)n * (n - 1) / 2) % MOD;
+        ans = (ans + (long)n * (n - 1)) % MOD;
+        ans = (ans + (long)n * (n - 1) * (n - 2) / 2) % MOD;
+        return (int) ans;
+    }
+}
