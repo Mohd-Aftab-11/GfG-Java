@@ -1,0 +1,20 @@
+class Solution {
+    int countWays(int n, int k) {
+        if (n == 1) return k;
+        
+        long[] same = new long[n + 1];
+        long[] diff = new long[n + 1];
+        
+        same[1] = 0;
+        diff[1] = k;
+        
+        same[2] = k;
+        diff[2] = k * (k - 1);
+        
+        for (int i = 3; i <= n; i++) {
+            same[i] = diff[i - 1];
+            diff[i] = (same[i - 1] + diff[i - 1]) * (k - 1);
+        }
+        return (int)(same[n] + diff[n]);
+    }
+}
