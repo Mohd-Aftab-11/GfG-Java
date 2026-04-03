@@ -1,0 +1,17 @@
+class Solution {
+    public void deleteMid(Stack<Integer> s) {
+        deleteMiddleHelper(s, 0, s.size());
+    }
+    
+    private void deleteMiddleHelper(Stack<Integer> s, int current, int total) {
+        if (s.isEmpty()) return;
+        
+        int element = s.pop();
+        deleteMiddleHelper(s, current + 1, total);
+        
+        int mid = total / 2;
+        if (current != mid) {
+            s.push(element);
+        }
+    }
+}
