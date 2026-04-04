@@ -1,0 +1,30 @@
+import java.util.*;
+
+class Solution {
+    static int checkMirrorTree(int n, int e, int[] A, int[] B) {
+        List<Stack<Integer>> tree1 = new ArrayList<>();
+        List<Queue<Integer>> tree2 = new ArrayList<>();
+        
+        for (int i = 0; i <= n; i++) {
+            tree1.add(new Stack<>());
+            tree2.add(new LinkedList<>());
+        }
+        for (int i = 0; i < 2 * e; i += 2) {
+            tree1.get(A[i]).push(A[i + 1]);
+        }
+        for (int i = 0; i < 2 * e; i += 2) {
+            tree2.get(B[i]).add(B[i + 1]);
+        }
+        for (int i = 1; i <= n; i++) {
+            Stack<Integer> st = tree1.get(i);
+            Queue<Integer> q = tree2.get(i);
+            
+            if (st.size() != q.size()) return 0;
+            
+            while (!st.isEmpty()) {
+                if (!st.pop().equals(q.poll())) return 0;
+            }
+        }
+        return 1;
+    }
+}
