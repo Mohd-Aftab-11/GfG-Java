@@ -1,0 +1,22 @@
+class Solution {
+    public int totalWays(int[] arr, int target) {
+        int totalSum = 0;
+        for (int num : arr) totalSum += num;
+        
+        if (target > totalSum || target < -totalSum) return 0;
+        if ((target + totalSum) % 2 != 0) return 0;
+        
+        int subsetSum = (target + totalSum) / 2;
+        if (subsetSum < 0) return 0;
+        
+        int[] dp = new int[subsetSum + 1];
+        dp[0] = 1;
+        
+        for (int num : arr) {
+            for (int s = subsetSum; s >= num; s--) {
+                dp[s] += dp[s - num];
+            }
+        }
+        return dp[subsetSum];
+    }
+}
