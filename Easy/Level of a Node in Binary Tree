@@ -1,0 +1,16 @@
+class Solution {
+
+    int getLevel(Node node, int data) {
+        return findLevel(node, data, 1);
+    }
+    
+    private int findLevel(Node node, int data, int level) {
+        if (node == null) return 0;
+        if (node.data == data) return level;
+        
+        int leftLevel = findLevel(node.left, data, level + 1);
+        if (leftLevel != 0) return leftLevel;
+        
+        return findLevel(node.right, data, level + 1);
+    }
+}
