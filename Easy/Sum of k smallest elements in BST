@@ -1,0 +1,22 @@
+class Tree {
+    private int count = 0;
+    private int sum = 0;
+    
+    int sum(Node root, int k) {
+        inorder(root, k);
+        return sum;
+    }
+    
+    private void inorder(Node node, int k) {
+        if (node == null || count >= k) return;
+        
+        inorder(node.left, k);
+        
+        if (count < k) {
+            sum += node.data;
+            count++;
+        }
+        
+        inorder(node.right, k);
+    }
+}
