@@ -1,0 +1,14 @@
+class Solution {
+    public int minEnergy(int a[]) {
+        int energy = 0;
+        int minEnergy = 0;
+        
+        for (int i = 0; i < a.length; i++) {
+            energy += a[i];
+            if (energy < minEnergy) {
+                minEnergy = energy;
+            }
+        }
+        return minEnergy < 0 ? -minEnergy + 1 : 1;
+    }
+}
