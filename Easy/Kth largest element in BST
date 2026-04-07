@@ -1,0 +1,22 @@
+class Solution {
+    private int count = 0;
+    private int result = 0;
+    
+    public int kthLargest(Node root, int k) {
+        reverseInorder(root, k);
+        return result;
+    }
+    
+    private void reverseInorder(Node node, int k) {
+        if (node == null || count >= k) return;
+        
+        reverseInorder(node.right, k);
+        
+        count++;
+        if (count == k) {
+            result = node.data;
+            return;
+        }
+        reverseInorder(node.left, k);
+    }
+}
