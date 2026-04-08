@@ -1,0 +1,39 @@
+class Solution {
+    private static long[][] prefixSum;
+    private static boolean prefixCalculated = false;
+    
+    long subMatrixSum(int arr[][], int n, int m, int x1, int y1, int x2, int y2) {
+        x1--; y1--; x2--; y2--;
+        
+        if (x1 < 0 || x1 >= n || x2 < 0 || x2 >= n || 
+            y1 < 0 || y1 >= m || y2 < 0 || y2 >= m) {
+            return 0;
+        }
+        
+        if (x1 > x2) {
+            int temp = x1;
+            x1 = x2;
+            x2 = temp;
+        }
+        if (y1 > y2) {
+            int temp = y1;
+            y1 = y2;
+            y2 = temp;
+        }
+        
+        long[][] prefix = new long[n + 1][m + 1];
+        
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                prefix[i][j] = arr[i-1][j-1] + prefix[i-1][j] + prefix[i][j-1] - prefix[i-1][j-1];
+            }
+        }
+        
+        long sum = prefix[x2 + 1][y2 + 1] 
+                 - prefix[x1][y2 + 1] 
+                 - prefix[x2 + 1][y1] 
+                 + prefix[x1][y1];
+        
+        return sum;
+    }
+}
