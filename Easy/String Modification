@@ -1,0 +1,45 @@
+import java.util.*;
+
+class Solution {
+    public static String rearrangeString(String str) {
+        int n = str.length();
+        
+        int[] freq = new int[26];
+        for (char c : str.toCharArray()) {
+            freq[c - 'a']++;
+        }
+        
+        PriorityQueue<Pair> maxHeap = new PriorityQueue<>((a, b) -> b.count - a.count);
+        
+        for (int i = 0; i < 26; i++) {
+            if (freq[i] > 0) {
+                maxHeap.offer(new Pair((char) (i + 'a'), freq[i]));
+            }
+        }
+        
+        StringBuilder result = new StringBuilder();
+        Pair prev = null;
+        
+        while (!maxHeap.isEmpty()) {
+            Pair current = maxHeap.poll();
+            result.append(current.ch);
+            current.count--;
+
+            if (prev != null && prev.count > 0) {
+                maxHeap.offer(prev);
+            }
+            prev = current;
+        }
+        return result.toString();
+    }
+    
+    static class Pair {
+        char ch;
+        int count;
+        
+        Pair(char ch, int count) {
+            this.ch = ch;
+            this.count = count;
+        }
+    }
+}
