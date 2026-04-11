@@ -1,0 +1,11 @@
+class Solution {
+    int countSubstr(String S) {
+        long countOnes = 0;
+        for (int i = 0; i < S.length(); i++) {
+            if (S.charAt(i) == '1') {
+                countOnes++;
+            }
+        }
+        return (int) (countOnes * (countOnes - 1) / 2);
+    }
+}
