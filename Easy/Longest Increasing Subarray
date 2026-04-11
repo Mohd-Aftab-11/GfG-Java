@@ -1,0 +1,23 @@
+import java.util.List;
+
+class Solution {
+    public int lenOfLongIncSubArr(List<Integer> arr) {
+        if (arr == null || arr.size() == 0) {
+            return 0;
+        }
+        
+        int maxLen = 1;
+        int currentLen = 1;
+        
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr.get(i) > arr.get(i - 1)) {
+                currentLen++;
+                maxLen = Math.max(maxLen, currentLen);
+            } else {
+                currentLen = 1;
+            }
+        }
+        
+        return maxLen;
+    }
+}
