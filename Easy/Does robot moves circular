@@ -1,0 +1,29 @@
+class Solution {
+    public String isCircular(String s) {
+        int x = 0, y = 0;
+        int direction = 0;
+        
+        for (char move : s.toCharArray()) {
+            if (move == 'G') {
+                if (direction == 0) {
+                    y++;
+                } else if (direction == 1) {
+                    x++;
+                } else if (direction == 2) {
+                    y--;
+                } else if (direction == 3) {
+                    x--;
+                }
+            } else if (move == 'L') {
+                direction = (direction + 3) % 4;
+            } else if (move == 'R') {
+                direction = (direction + 1) % 4;
+            }
+        }
+        if (x == 0 && y == 0) {
+            return "Circular";
+        } else {
+            return "Not Circular";
+        }
+    }
+}
