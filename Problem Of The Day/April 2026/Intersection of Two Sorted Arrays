@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+
+class Solution {
+    ArrayList<Integer> intersection(int[] a, int[] b) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int i = 0, j = 0;
+        int n = a.length, m = b.length;
+        
+        while (i < n && j < m) {
+            if (a[i] < b[j]) {
+                i++;
+            } else if (a[i] > b[j]) {
+                j++;
+            } else {
+                result.add(a[i]);
+                
+                int current = a[i];
+                while (i < n && a[i] == current) i++;
+                while (j < m && b[j] == current) j++;
+            }
+        }
+        return result;
+    }
+}
