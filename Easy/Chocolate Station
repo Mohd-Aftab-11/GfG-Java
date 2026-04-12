@@ -1,0 +1,29 @@
+class Solution {
+    public long getChocolateCost(int[] arr, int price) {
+        long totalChocolatesBought = 0;
+        long balance = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
+            if (i == 0) {
+                totalChocolatesBought += arr[i];
+                balance = 0;
+            } else {
+                int needed = arr[i - 1] - arr[i];
+                
+                if (needed > 0) {
+                    balance += needed;
+                } else if (needed < 0) {
+                    int loss = -needed;
+                    if (balance < loss) {
+                        long toBuy = loss - balance;
+                        totalChocolatesBought += toBuy;
+                        balance = 0;
+                    } else {
+                        balance -= loss;
+                    }
+                }
+            }
+        }
+        return totalChocolatesBought * price;
+    }
+}
