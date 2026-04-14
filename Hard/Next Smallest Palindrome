@@ -1,0 +1,74 @@
+class Solution {
+    static int[] nextPalindrome(int[] num) {
+        int n = num.length;
+        
+        boolean allNine = true;
+        for (int digit : num) {
+            if (digit != 9) {
+                allNine = false;
+                break;
+            }
+        }
+        
+        if (allNine) {
+            int[] result = new int[n + 1];
+            result[0] = 1;
+            result[n] = 1;
+            return result;
+        }
+        
+        int[] result = num.clone();
+        
+        boolean isPalindrome = true;
+        for (int i = 0; i < n / 2; i++) {
+            if (result[i] != result[n - 1 - i]) {
+                isPalindrome = false;
+                break;
+            }
+        }
+        
+        if (isPalindrome) {
+            incrementMiddle(result);
+        } else {
+            for (int i = 0; i < n / 2; i++) {
+                result[n - 1 - i] = result[i];
+            }
+            if (isGreaterOrEqual(result, num)) {
+                return result;
+            } else {
+                incrementMiddle(result);
+            }
+        }
+        
+        return result;
+    }
+    
+    static void incrementMiddle(int[] num) {
+        int n = num.length;
+        int mid = n / 2;
+        int carry = 1;
+        
+        for (int i = mid - (n % 2 == 0 ? 1 : 0); i >= 0 && carry > 0; i--) {
+            int sum = num[i] + carry;
+            num[i] = sum % 10;
+            carry = sum / 10;
+        }
+        
+        for (int i = 0; i < n / 2; i++) {
+            num[n - 1 - i] = num[i];
+        }
+    }
+    
+    static boolean isGreaterOrEqual(int[] palindrome, int[] original) {
+        int n = palindrome.length;
+        
+        for (int i = 0; i < n; i++) {
+            if (palindrome[i] > original[i]) {
+                return true;
+            } else if (palindrome[i] < original[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
