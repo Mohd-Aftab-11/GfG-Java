@@ -1,0 +1,26 @@
+import java.util.Arrays;
+import java.util.Comparator;
+
+class Solution {
+    public int maxMeetings(int start[], int end[]) {
+        int n = start.length;
+        
+        Integer[] indices = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            indices[i] = i;
+        }
+        Arrays.sort(indices, (a, b) -> end[a] - end[b]);
+        
+        int count = 1;
+        int lastEnd = end[indices[0]];
+        
+        for (int i = 1; i < n; i++) {
+            int idx = indices[i];
+            if (start[idx] > lastEnd) {
+                count++;
+                lastEnd = end[idx];
+            }
+        }
+        return count;
+    }
+}
