@@ -1,0 +1,30 @@
+// User function Template for Java
+
+class Solution {
+    static long isPallindrome(long N) {
+        StringBuilder binary = new StringBuilder();
+        long num = N;
+        
+        while (num > 0) {
+            binary.append(num % 2);
+            num = num / 2;
+        }
+        
+        if (binary.length() == 0) {
+            binary.append("0");
+        }
+        
+        String binaryStr = binary.toString();
+        int left = 0;
+        int right = binaryStr.length() - 1;
+        
+        while (left < right) {
+            if (binaryStr.charAt(left) != binaryStr.charAt(right)) {
+                return 0;
+            }
+            left++;
+            right--;
+        }
+        return 1;
+    }
+}
