@@ -1,0 +1,23 @@
+class Solution {
+    int maxOnes(int[] arr) {
+        int n = arr.length;
+        int originalOnes = 0;
+        
+        int maxGain = 0;
+        int currentGain = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (arr[i] == 1) {
+                originalOnes++;
+                currentGain = Math.max(currentGain - 1, -1);
+            } else {
+                currentGain = Math.max(currentGain + 1, 1);
+            }
+            maxGain = Math.max(maxGain, currentGain);
+        }
+        if (maxGain <= 0) {
+            return originalOnes;
+        }
+        return originalOnes + maxGain;
+    }
+}
