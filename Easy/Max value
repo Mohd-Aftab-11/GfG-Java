@@ -1,0 +1,39 @@
+class Solution {
+    public int maxVal(List<Integer> arr) {
+        int n = arr.size();
+        
+        if (n < 2) return 0;
+        
+        int maxVal = arr.get(0) - 0;
+        int minVal = arr.get(0) - 0;
+        int maxIndex = 0;
+        int minIndex = 0;
+        
+        for (int i = 1; i < n; i++) {
+            int transformed = arr.get(i) - i;
+            if (transformed > maxVal) {
+                maxVal = transformed;
+                maxIndex = i;
+            }
+            if (transformed < minVal) {
+                minVal = transformed;
+                minIndex = i;
+            }
+        }
+        if (maxIndex != minIndex) {
+            return maxVal - minVal;
+        }
+        
+        int secondMax = Integer.MIN_VALUE;
+        int secondMin = Integer.MAX_VALUE;
+        
+        for (int i = 0; i < n; i++) {
+            int transformed = arr.get(i) - i;
+            if (i != maxIndex) {
+                secondMax = Math.max(secondMax, transformed);
+                secondMin = Math.min(secondMin, transformed);
+            }
+        }
+        return Math.max(secondMax - minVal, maxVal - secondMin);
+    }
+}
