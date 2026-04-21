@@ -1,0 +1,47 @@
+class Solution {
+    public int minSteps(int m, int n, int d) {
+        if (d > Math.max(m, n)) return -1;
+        if (d == 0) return 0;
+        if (d % gcd(m, n) != 0) return -1;
+        
+        int steps1 = simulate(m, n, d);
+        int steps2 = simulate(n, m, d);
+        
+        return Math.min(steps1, steps2);
+    }
+    
+    private int simulate(int jug1Cap, int jug2Cap, int target) {
+        int jug1 = 0, jug2 = 0;
+        int steps = 0;
+        
+        while (true) {
+            if (jug1 == target || jug2 == target) {
+                return steps;
+            }
+            
+            if (jug1 == 0) {
+                jug1 = jug1Cap;
+                steps++;
+            }
+            else if (jug2 == jug2Cap) {
+                jug2 = 0;
+                steps++;
+            }
+            else {
+                int pour = Math.min(jug1, jug2Cap - jug2);
+                jug1 -= pour;
+                jug2 += pour;
+                steps++;
+            }
+        }
+    }
+    
+    private int gcd(int a, int b) {
+        while (b != 0) {
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        return a;
+    }
+}
