@@ -1,0 +1,16 @@
+class Solution {
+    static long nthMagicNo(int n) {
+        long MOD = 1000000007;
+        long power = 5;
+        long result = 0;
+        
+        while (n > 0) {
+            if ((n & 1) == 1) {
+                result = (result + power) % MOD;
+            }
+            power = (power * 5) % MOD;
+            n >>= 1;
+        }
+        return result;
+    }
+}
