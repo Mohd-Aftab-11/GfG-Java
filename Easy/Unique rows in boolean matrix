@@ -1,0 +1,24 @@
+class Solution {
+    public List<List<Integer>> uniqueRow(int[][] mat, int row, int col) {
+        List<List<Integer>> result = new ArrayList<>();
+        HashSet<String> seen = new HashSet<>();
+        
+        for (int i = 0; i < row; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < col; j++) {
+                sb.append(mat[i][j]);
+            }
+            String rowStr = sb.toString();
+            
+            if (!seen.contains(rowStr)) {
+                seen.add(rowStr);
+                List<Integer> rowList = new ArrayList<>();
+                for (int j = 0; j < col; j++) {
+                    rowList.add(mat[i][j]);
+                }
+                result.add(rowList);
+            }
+        }
+        return result;
+    }
+}
