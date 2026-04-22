@@ -1,0 +1,20 @@
+import java.util.*;
+
+class Solution {
+    public boolean findPair(int[] arr, int x) {
+        if (arr.length < 2) return false;
+        
+        HashSet<Integer> set = new HashSet<>();
+        
+        for (int num : arr) {
+            if (set.contains(num + x)) {
+                return true;
+            }
+            if (set.contains(num - x)) {
+                return true;
+            }
+            set.add(num);
+        }
+        return false;
+    }
+}
