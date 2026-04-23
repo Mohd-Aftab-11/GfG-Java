@@ -1,0 +1,36 @@
+class Solution {
+    static int numbersInRange(int L, int R) {
+        if (L > R) return 0;
+        return countValid(R) - countValid(L - 1);
+    }
+    
+    static int countValid(int n) {
+        if (n < 10) return n;
+        
+        String nStr = Integer.toString(n);
+        int digits = nStr.length();
+        int firstDigit = nStr.charAt(0) - '0';
+        
+        int count = 9;
+        
+        for (int d = 2; d < digits; d++) {
+            count += 9 * (int)Math.pow(10, d - 2);
+        }
+        count += (firstDigit - 1) * (int)Math.pow(10, digits - 2);
+        
+        int middlePart = 0;
+        if (digits > 2) {
+            middlePart = Integer.parseInt(nStr.substring(1, digits - 1));
+        }
+        int maxMiddleAllowed = middlePart;
+        
+        int numberWithCurrentMiddle = firstDigit * (int)Math.pow(10, digits - 1) + middlePart * 10 + firstDigit;
+        
+        if (numberWithCurrentMiddle <= n) {
+            count += maxMiddleAllowed + 1;
+        } else {
+            count += maxMiddleAllowed;
+        }
+        return count;
+    }
+}
