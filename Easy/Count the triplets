@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    int countTriplet(int arr[]) {
+        int n = arr.length;
+        if (n < 3) return 0;
+        
+        Arrays.sort(arr);
+        HashSet<String> triplets = new HashSet<>();
+        
+        for (int k = 2; k < n; k++) {
+            int i = 0;
+            int j = k - 1;
+            int target = arr[k];
+            
+            while (i < j) {
+                int sum = arr[i] + arr[j];
+                if (sum == target) {
+                    int[] triplet = {arr[i], arr[j], target};
+                    Arrays.sort(triplet);
+                    triplets.add(triplet[0] + "," + triplet[1] + "," + triplet[2]);
+                    i++;
+                    j--;
+                } else if (sum < target) {
+                    i++;
+                } else {
+                    j--;
+                }
+            }
+        }
+        return triplets.size();
+    }
+}
