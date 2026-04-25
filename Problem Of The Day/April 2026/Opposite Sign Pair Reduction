@@ -1,0 +1,35 @@
+class Solution {
+    public ArrayList<Integer> reducePairs(int[] arr) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        for (int num : arr) {
+            boolean added = true;
+            
+            while (!result.isEmpty() && 
+                   hasOppositeSigns(result.get(result.size() - 1), num)) {
+                
+                int top = result.get(result.size() - 1);
+                
+                if (Math.abs(top) > Math.abs(num)) {
+                    added = false;
+                    break;
+                } 
+                else if (Math.abs(top) < Math.abs(num)) {
+                    result.remove(result.size() - 1);
+                } 
+                else {
+                    result.remove(result.size() - 1);
+                    added = false;
+                    break;
+                }
+            }
+            if (added) {
+                result.add(num);
+            }
+        }
+        return result;
+    }
+    private boolean hasOppositeSigns(int a, int b) {
+        return (a > 0 && b < 0) || (a < 0 && b > 0);
+    }
+}
