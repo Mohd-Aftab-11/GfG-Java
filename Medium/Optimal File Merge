@@ -1,0 +1,32 @@
+#include <queue>
+#include <vector>
+#include <functional>
+
+class Solution
+{
+public:
+    int minComputation(vector<int> files)
+    {
+        priority_queue<int, vector<int>, greater<int>> minHeap;
+        
+        for (int file : files) {
+            minHeap.push(file);
+        }
+        
+        int totalComputation = 0;
+        
+        while (minHeap.size() > 1) {
+            int first = minHeap.top();
+            minHeap.pop();
+            int second = minHeap.top();
+            minHeap.pop();
+            
+            int merged = first + second;
+            
+            totalComputation += merged;
+            
+            minHeap.push(merged);
+        }
+        return totalComputation;
+    }
+};
