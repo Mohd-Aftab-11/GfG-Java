@@ -1,0 +1,38 @@
+import java.util.*;
+
+class Solution {
+    int steppingNumbers(int n, int m) {
+        if (n > m) return 0;
+        
+        int count = 0;
+        Queue<Integer> queue = new LinkedList<>();
+        
+        for (int i = 0; i <= 9; i++) {
+            if (i >= n && i <= m) {
+                if (i == 0) count++;
+            }
+            if (i != 0) {
+                queue.add(i);
+            }
+        }
+        while (!queue.isEmpty()) {
+            int num = queue.poll();
+            if (num >= n && num <= m) {
+                count++;
+            }
+            if (num > m) continue;
+            
+            int lastDigit = num % 10;
+            int next1 = num * 10 + (lastDigit - 1);
+            int next2 = num * 10 + (lastDigit + 1);
+            
+            if (lastDigit > 0 && next1 <= m) {
+                queue.add(next1);
+            }
+            if (lastDigit < 9 && next2 <= m) {
+                queue.add(next2);
+            }
+        }
+        return count;
+    }
+}
