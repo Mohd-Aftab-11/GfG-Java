@@ -1,0 +1,25 @@
+class Solution {
+    public long maxSumWithK(long a[], long n, long k) {
+        int N = (int) n;
+        int K = (int) k;
+        
+        long[] prefix = new long[N + 1];
+        prefix[0] = 0;
+        for (int i = 0; i < N; i++) {
+            prefix[i + 1] = prefix[i] + a[i];
+        }
+        
+        long[] minPrefix = new long[N + 1];
+        minPrefix[0] = prefix[0];
+        for (int i = 1; i <= N; i++) {
+            minPrefix[i] = Math.min(minPrefix[i - 1], prefix[i]);
+        }
+        long maxSum = Long.MIN_VALUE;
+        
+        for (int i = K; i <= N; i++) {
+            long currentSum = prefix[i] - minPrefix[i - K];
+            maxSum = Math.max(maxSum, currentSum);
+        }
+        return maxSum;
+    }
+}
