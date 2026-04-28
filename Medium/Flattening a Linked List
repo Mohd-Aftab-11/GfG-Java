@@ -1,0 +1,27 @@
+class Solution {
+    public Node flatten(Node root) {
+        if (root == null || root.next == null) {
+            return root;
+        }
+        Node nextHead = flatten(root.next);
+        root.next = null;
+        
+        return merge(root, nextHead);
+    }
+    
+    private Node merge(Node list1, Node list2) {
+        if (list1 == null) return list2;
+        if (list2 == null) return list1;
+        
+        Node result;
+        
+        if (list1.data <= list2.data) {
+            result = list1;
+            result.bottom = merge(list1.bottom, list2);
+        } else {
+            result = list2;
+            result.bottom = merge(list1, list2.bottom);
+        }
+        return result;
+    }
+}
