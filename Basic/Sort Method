@@ -1,0 +1,5 @@
+class Solution {
+    public static void sortArray(int arr[]) {
+        java.util.Arrays.sort(arr);
+    }
+}
