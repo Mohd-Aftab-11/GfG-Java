@@ -1,0 +1,15 @@
+class Solution {
+    public static Node deleteHead(Node head) {
+        if (head == null) {
+            return null;
+        }
+        Node newHead = head.next;
+        
+        if (newHead != null) {
+            newHead.prev = null;
+        }
+        head.next = null;
+
+        return newHead;
+    }
+}
