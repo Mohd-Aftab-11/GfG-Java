@@ -1,0 +1,7 @@
+import java.math.BigInteger;
+
+class MathematicalOperation {
+    static BigInteger mul(BigInteger a, BigInteger b) {
+        return a.multiply(b);
+    }
+}
