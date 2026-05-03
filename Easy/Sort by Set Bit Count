@@ -1,0 +1,44 @@
+import java.util.*;
+
+class Solution {
+
+    static int countBits(int n)
+    {
+        int cnt = 0;
+        while (n > 0) {
+            cnt += (n & 1);
+            n = n >> 1;
+        }
+        return cnt;
+    }
+
+    static ArrayList<Integer> sortBySetBitCount(int[] arr)
+    {
+        Integer[] arrInteger = new Integer[arr.length];
+
+        for (int i = 0; i < arr.length; i++) {
+            arrInteger[i] = arr[i];
+        }
+
+        Arrays.sort(arrInteger, (a, b) -> {
+            int count1 = countBits(a);
+            int count2 = countBits(b);
+
+            if (count1 != count2) {
+                return count2 - count1;
+            }
+            return 0;
+        });
+        return new ArrayList<>(Arrays.asList(arrInteger));
+    }
+    public static void main(String[] args)
+    {
+        int[] arr = { 5, 2, 3, 9, 4, 6, 7, 15, 32 };
+
+        ArrayList<Integer> result = sortBySetBitCount(arr);
+
+        for (int x : result) {
+            System.out.print(x + " ");
+        }
+    }
+}
