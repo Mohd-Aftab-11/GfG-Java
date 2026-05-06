@@ -1,0 +1,11 @@
+class Solution {
+    public static void fillLinkedList(LinkedList<Integer> ll, int k) {
+        int size = ll.size();
+        
+        ll.clear();
+        
+        for (int i = 0; i < size; i++) {
+            ll.add(k);
+        }
+    }
+}
