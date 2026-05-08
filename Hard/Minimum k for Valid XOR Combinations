@@ -1,0 +1,86 @@
+class Solution {
+    static class TrieNode {
+        TrieNode[] children = new TrieNode[2];
+        int count = 0;
+    }
+    
+    public static int minimizeKForXOR(int x, int[] arr) {
+        int n = arr.length;
+        
+        int maxXor = 0;
+        for (int num : arr) {
+            maxXor = Math.max(maxXor, num);
+        }
+        int left = 0;
+        int right = (1 << 20) - 1;
+        
+        int answer = right;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (countSubarraysWithXorAtMostK(arr, mid) >= x) {
+                answer = mid;
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return answer;
+    }
+    
+    private static long countSubarraysWithXorAtMostK(int[] arr, int k) {
+        int n = arr.length;
+        TrieNode root = new TrieNode();
+        long count = 0;
+        int prefixXor = 0;
+        
+        insert(root, 0);
+        
+        for (int i = 0; i < n; i++) {
+            prefixXor ^= arr[i];
+            
+            count += query(root, prefixXor, k);
+            
+            insert(root, prefixXor);
+        }
+        return count;
+    }
+    
+    private static void insert(TrieNode root, int num) {
+        TrieNode node = root;
+        for (int i = 19; i >= 0; i--) {
+            int bit = (num >> i) & 1;
+            if (node.children[bit] == null) {
+                node.children[bit] = new TrieNode();
+            }
+            node = node.children[bit];
+            node.count++;
+        }
+    }
+    
+    private static int query(TrieNode root, int num, int k) {
+        TrieNode node = root;
+        int result = 0;
+        
+        for (int i = 19; i >= 0; i--) {
+            if (node == null) break;
+            
+            int numBit = (num >> i) & 1;
+            int kBit = (k >> i) & 1;
+            
+            if (kBit == 1) {
+                if (node.children[numBit] != null) {
+                    result += node.children[numBit].count;
+                }
+                node = node.children[numBit ^ 1];
+            } else {
+                node = node.children[numBit];
+            }
+        }
+        if (node != null) {
+            result += node.count;
+        }
+        return result;
+    }
+}
