@@ -1,0 +1,57 @@
+class Solution {
+    public List<String> validParenthesis(String s) {
+        List<String> result = new ArrayList<>();
+        if (s == null) return result;
+        
+        Queue<String> queue = new LinkedList<>();
+        Set<String> visited = new HashSet<>();
+        
+        queue.offer(s);
+        visited.add(s);
+        boolean found = false;
+        
+        while (!queue.isEmpty() && !found) {
+            int levelSize = queue.size();
+            Set<String> validAtThisLevel = new TreeSet<>();
+            
+            for (int i = 0; i < levelSize; i++) {
+                String current = queue.poll();
+                
+                if (isValid(current)) {
+                    found = true;
+                    validAtThisLevel.add(current);
+                    continue;
+                }
+                for (int j = 0; j < current.length(); j++) {
+                    char c = current.charAt(j);
+                    if (c == '(' || c == ')') {
+                        String next = current.substring(0, j) + current.substring(j + 1);
+                        if (!visited.contains(next)) {
+                            visited.add(next);
+                            queue.offer(next);
+                        }
+                    }
+                }
+            }
+            if (found) {
+                result.addAll(validAtThisLevel);
+                Collections.sort(result);
+                return result;
+            }
+        }
+        return result;
+    }
+    
+    private boolean isValid(String s) {
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '(') {
+                count++;
+            } else if (c == ')') {
+                if (count == 0) return false;
+                count--;
+            }
+        }
+        return count == 0;
+    }
+}
