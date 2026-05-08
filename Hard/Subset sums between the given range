@@ -1,0 +1,80 @@
+class Solution {
+    public static long countSubsets(int n, int[] arr, int l, int r) {
+        int n1 = n / 2;
+        int n2 = n - n1;
+        
+        int[] firstHalf = new int[n1];
+        int[] secondHalf = new int[n2];
+        
+        for (int i = 0; i < n1; i++) {
+            firstHalf[i] = arr[i];
+        }
+        for (int i = 0; i < n2; i++) {
+            secondHalf[i] = arr[n1 + i];
+        }
+        
+        long[] sums1 = generateSubsetSums(firstHalf);
+        long[] sums2 = generateSubsetSums(secondHalf);
+        
+        java.util.Arrays.sort(sums2);
+        
+        long count = 0;
+        for (long sum1 : sums1) {
+            long minSum2 = l - sum1;
+            long maxSum2 = r - sum1;
+            
+            count += countInRange(sums2, minSum2, maxSum2);
+        }
+        return count;
+    }
+    
+    private static long[] generateSubsetSums(int[] arr) {
+        int n = arr.length;
+        int totalSubsets = 1 << n;
+        long[] sums = new long[totalSubsets];
+        
+        for (int mask = 0; mask < totalSubsets; mask++) {
+            long sum = 0;
+            for (int i = 0; i < n; i++) {
+                if ((mask & (1 << i)) != 0) {
+                    sum += arr[i];
+                }
+            }
+            sums[mask] = sum;
+        }
+        return sums;
+    }
+    
+    private static long countInRange(long[] arr, long low, long high) {
+        int left = lowerBound(arr, low);
+        int right = upperBound(arr, high);
+        
+        return right - left;
+    }
+    
+    private static int lowerBound(long[] arr, long target) {
+        int left = 0, right = arr.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] >= target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+    
+    private static int upperBound(long[] arr, long target) {
+        int left = 0, right = arr.length;
+        while (left < right) {
+            int mid = left + (right - left) / 2;
+            if (arr[mid] > target) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return left;
+    }
+}
