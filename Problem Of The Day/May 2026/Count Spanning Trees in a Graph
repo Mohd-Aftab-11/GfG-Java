@@ -1,0 +1,49 @@
+class Solution {
+    public int countSpanTree(int n, int[][] edges) {
+        if (n == 1) return 1;
+        if (edges.length == n - 1) return 1;
+        
+        int[][] laplacian = new int[n][n];
+        for (int[] edge : edges) {
+            int u = edge[0];
+            int v = edge[1];
+            laplacian[u][u]++;
+            laplacian[v][v]++;
+            laplacian[u][v] = -1;
+            laplacian[v][u] = -1;
+        }
+        
+        int size = n - 1;
+        int[][] matrix = new int[size][size];
+        for (int i = 1; i < n; i++) {
+            for (int j = 1; j < n; j++) {
+                matrix[i - 1][j - 1] = laplacian[i][j];
+            }
+        }
+        return determinant(matrix, size);
+    }
+    
+    private int determinant(int[][] mat, int size) {
+        int det = 0;
+        
+        if (size == 1) {
+            return mat[0][0];
+        }
+        if (size == 2) {
+            return mat[0][0] * mat[1][1] - mat[0][1] * mat[1][0];
+        }
+        for (int col = 0; col < size; col++) {
+            int[][] subMat = new int[size - 1][size - 1];
+            for (int i = 1; i < size; i++) {
+                int subCol = 0;
+                for (int j = 0; j < size; j++) {
+                    if (j == col) continue;
+                    subMat[i - 1][subCol++] = mat[i][j];
+                }
+            }
+            int sign = (col % 2 == 0) ? 1 : -1;
+            det += sign * mat[0][col] * determinant(subMat, size - 1);
+        }
+        return det;
+    }
+}
