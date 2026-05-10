@@ -1,0 +1,18 @@
+class Solution {
+    public int wordCount(TrieNode root) {
+        return countWords(root);
+    }
+    
+    private int countWords(TrieNode node) {
+        if (node == null) return 0;
+        
+        int count = node.isLeaf ? 1 : 0;
+        
+        for (int i = 0; i < 26; i++) {
+            if (node.children[i] != null) {
+                count += countWords(node.children[i]);
+            }
+        }
+        return count;
+    }
+}
