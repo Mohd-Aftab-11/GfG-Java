@@ -1,0 +1,16 @@
+class Solution {
+    public int countWaystoDivide(int N, int K) {
+        int[][] dp = new int[N + 1][K + 1];
+        dp[0][0] = 1;
+        
+        for (int n = 1; n <= N; n++) {
+            for (int k = 1; k <= Math.min(n, K); k++) {
+                dp[n][k] = dp[n - 1][k - 1];
+                if (n - k >= 0) {
+                    dp[n][k] += dp[n - k][k];
+                }
+            }
+        }
+        return dp[N][K];
+    }
+}
