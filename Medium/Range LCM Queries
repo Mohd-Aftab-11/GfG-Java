@@ -1,0 +1,73 @@
+import java.math.BigInteger;
+import java.util.*;
+
+class Solution {
+    private BigInteger[] tree;
+    private int n;
+    
+    private BigInteger lcm(BigInteger a, BigInteger b) {
+        return a.multiply(b).divide(a.gcd(b));
+    }
+    
+    private void build(int[] arr, int node, int start, int end) {
+        if (start == end) {
+            tree[node] = BigInteger.valueOf(arr[start]);
+        } else {
+            int mid = (start + end) / 2;
+            build(arr, node * 2, start, mid);
+            build(arr, node * 2 + 1, mid + 1, end);
+            tree[node] = lcm(tree[node * 2], tree[node * 2 + 1]);
+        }
+    }
+    
+    private void update(int node, int start, int end, int idx, int value) {
+        if (start == end) {
+            tree[node] = BigInteger.valueOf(value);
+        } else {
+            int mid = (start + end) / 2;
+            if (idx <= mid) {
+                update(node * 2, start, mid, idx, value);
+            } else {
+                update(node * 2 + 1, mid + 1, end, idx, value);
+            }
+            tree[node] = lcm(tree[node * 2], tree[node * 2 + 1]);
+        }
+    }
+    
+    private BigInteger query(int node, int start, int end, int l, int r) {
+        if (r < start || l > end) {
+            return BigInteger.ONE;
+        }
+        if (l <= start && end <= r) {
+            return tree[node];
+        }
+        int mid = (start + end) / 2;
+        BigInteger left = query(node * 2, start, mid, l, r);
+        BigInteger right = query(node * 2 + 1, mid + 1, end, l, r);
+        return lcm(left, right);
+    }
+    
+    public ArrayList<Long> RangeLCMQuery(int[] arr, int[][] queries) {
+        n = arr.length;
+        tree = new BigInteger[4 * n];
+        build(arr, 1, 0, n - 1);
+        
+        ArrayList<Long> result = new ArrayList<>();
+        
+        for (int[] q : queries) {
+            int type = q[0];
+            if (type == 1) {
+                int idx = q[1];
+                int value = q[2];
+                update(1, 0, n - 1, idx, value);
+                arr[idx] = value;
+            } else {
+                int l = q[1];
+                int r = q[2];
+                BigInteger lcmVal = query(1, 0, n - 1, l, r);
+                result.add(lcmVal.longValue());
+            }
+        }
+        return result;
+    }
+}
