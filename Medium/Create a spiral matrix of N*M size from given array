@@ -1,0 +1,36 @@
+class Solution {
+    public int[][] spiralFill(int n, int m, int[] arr) {
+        int[][] result = new int[n][m];
+        
+        int top = 0, bottom = n - 1;
+        int left = 0, right = m - 1;
+        
+        int idx = 0;
+        
+        while (top <= bottom && left <= right) {
+            for (int j = left; j <= right; j++) {
+                result[top][j] = arr[idx++];
+            }
+            top++;
+            
+            for (int i = top; i <= bottom; i++) {
+                result[i][right] = arr[idx++];
+            }
+            right--;
+            
+            if (top <= bottom) {
+                for (int j = right; j >= left; j--) {
+                    result[bottom][j] = arr[idx++];
+                }
+                bottom--;
+            }
+            if (left <= right) {
+                for (int i = bottom; i >= top; i--) {
+                    result[i][left] = arr[idx++];
+                }
+                left++;
+            }
+        }
+        return result;
+    }
+}
