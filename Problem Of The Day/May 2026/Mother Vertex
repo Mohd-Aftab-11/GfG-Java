@@ -1,0 +1,60 @@
+import java.util.*;
+
+class Solution {
+    public int findMotherVertex(int V, int[][] edges) {
+        @SuppressWarnings("unchecked")
+        ArrayList<Integer>[] adj = new ArrayList[V];
+        for (int i = 0; i < V; i++) {
+            adj[i] = new ArrayList<>();
+        }
+        for (int[] edge : edges) {
+            adj[edge[0]].add(edge[1]);
+        }
+        
+        boolean[] visited = new boolean[V];
+        int lastFinished = -1;
+        
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                dfs(i, adj, visited);
+                lastFinished = i;
+            }
+        }
+        if (lastFinished == -1) return -1;
+        
+        Arrays.fill(visited, false);
+        dfs(lastFinished, adj, visited);
+        
+        for (int i = 0; i < V; i++) {
+            if (!visited[i]) {
+                return -1;
+            }
+        }
+        
+        for (int candidate = 0; candidate < lastFinished; candidate++) {
+            Arrays.fill(visited, false);
+            dfs(candidate, adj, visited);
+            
+            boolean allVisited = true;
+            for (int i = 0; i < V; i++) {
+                if (!visited[i]) {
+                    allVisited = false;
+                    break;
+                }
+            }
+            if (allVisited) {
+                return candidate;
+            }
+        }
+        return lastFinished;
+    }
+    
+    private void dfs(int node, ArrayList<Integer>[] adj, boolean[] visited) {
+        visited[node] = true;
+        for (int neighbor : adj[node]) {
+            if (!visited[neighbor]) {
+                dfs(neighbor, adj, visited);
+            }
+        }
+    }
+}
