@@ -1,0 +1,35 @@
+class Solution {
+    public static long maxTime(int N, int[] amt, int K) {
+        long left = 0;
+        long right = 0;
+        
+        for (int i = 0; i < N; i++) {
+            right += amt[i];
+        }
+        long answer = 0;
+        while (left <= right) {
+            long mid = left + (right - left) / 2;
+            
+            if (isPossible(amt, K, mid)) {
+                answer = mid;
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return answer;
+    }
+    
+    private static boolean isPossible(int[] amt, int K, long time) {
+        long totalGasNeeded = (long) K * time;
+        long totalGasAvailable = 0;
+        
+        for (int i = 0; i < amt.length; i++) {
+            totalGasAvailable += Math.min(amt[i], time);
+            if (totalGasAvailable >= totalGasNeeded) {
+                return true;
+            }
+        }
+        return totalGasAvailable >= totalGasNeeded;
+    }
+}
