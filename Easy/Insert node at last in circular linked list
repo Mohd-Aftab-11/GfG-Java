@@ -1,0 +1,20 @@
+class gfg {
+    static Node insert_at_end(Node head, int x) {
+        Node newNode = new Node(x);
+        
+        if (head == null) {
+            newNode.next = newNode;
+            return newNode;
+        }
+        
+        Node temp = head;
+        
+        while (temp.next != head) {
+            temp = temp.next;
+        }
+        temp.next = newNode;
+        newNode.next = head;
+        
+        return head;
+    }
+}
