@@ -1,0 +1,19 @@
+class Solution {
+    public int maxSum(int n) {
+        int[] dp = new int[n + 1];
+        return helper(n, dp);
+    }
+    
+    private int helper(int n, int[] dp) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        
+        if (dp[n] != 0) return dp[n];
+        
+        int sumOfParts = helper(n/2, dp) + helper(n/3, dp) + helper(n/4, dp);
+        
+        dp[n] = Math.max(n, sumOfParts);
+        
+        return dp[n];
+    }
+}
