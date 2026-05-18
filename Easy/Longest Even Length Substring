@@ -1,0 +1,30 @@
+class Solution {
+    public int findLength(String s) {
+        int n = s.length();
+        int maxLength = 0;
+        
+        int[] digits = new int[n];
+        for (int i = 0; i < n; i++) {
+            digits[i] = s.charAt(i) - '0';
+        }
+        
+        int[] prefixSum = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + digits[i];
+        }
+        for (int len = 2; len <= n; len += 2) {
+            for (int start = 0; start + len <= n; start++) {
+                int mid = start + len / 2;
+                
+                int leftSum = prefixSum[mid] - prefixSum[start];
+                
+                int rightSum = prefixSum[start + len] - prefixSum[mid];
+                
+                if (leftSum == rightSum) {
+                    maxLength = Math.max(maxLength, len);
+                }
+            }
+        }
+        return maxLength;
+    }
+}
