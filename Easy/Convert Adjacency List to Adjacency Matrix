@@ -1,0 +1,15 @@
+import java.util.*;
+
+class Solution {
+    public int[][] adjToMat(ArrayList<ArrayList<Integer>> adj) {
+        int V = adj.size();
+        int[][] matrix = new int[V][V];
+        
+        for (int i = 0; i < V; i++) {
+            for (int j : adj.get(i)) {
+                matrix[i][j] = 1;
+            }
+        }
+        return matrix;
+    }
+}
