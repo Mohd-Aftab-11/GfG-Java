@@ -1,0 +1,10 @@
+class Solution {
+    public int countEdges(ArrayList<ArrayList<Integer>> adj) {
+        int totalEdges = 0;
+        
+        for (int i = 0; i < adj.size(); i++) {
+            totalEdges += adj.get(i).size();
+        }
+        return totalEdges / 2;
+    }
+}
