@@ -1,0 +1,5 @@
+class Solution {
+    public int subtractOne(int x) {
+        return x + (~0);
+    }
+}
