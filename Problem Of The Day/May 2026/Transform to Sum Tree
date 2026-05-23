@@ -1,0 +1,16 @@
+class Solution {
+    public int toSumTreeHelper(Node root) {
+        if (root == null) return 0;
+        
+        int leftSum = toSumTreeHelper(root.left);
+        int rightSum = toSumTreeHelper(root.right);
+        
+        int oldVal = root.data;
+        root.data = leftSum + rightSum;
+        
+        return oldVal + leftSum + rightSum;
+    }
+    public void toSumTree(Node root) {
+        toSumTreeHelper(root);
+    }
+}
