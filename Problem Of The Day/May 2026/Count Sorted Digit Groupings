@@ -1,0 +1,32 @@
+class Solution {
+    public int validGroups(String s) {
+        int n = s.length();
+        int maxSum = 9 * n;
+        int mod = 1_000_000_007;
+        
+        long[][] dp = new long[n][maxSum + 1];
+        long[][] prefix = new long[n][maxSum + 1];
+        
+        for (int i = 0; i < n; i++) {
+            int sum = 0;
+            for (int j = i; j >= 0; j--) {
+                sum += s.charAt(j) - '0';
+                if (j == 0) {
+                    dp[i][sum] = (dp[i][sum] + 1) % mod;
+                } else {
+                    long ways = prefix[j-1][sum];
+                    dp[i][sum] = (dp[i][sum] + ways) % mod;
+                }
+            }
+            prefix[i][0] = dp[i][0];
+            for (int ssum = 1; ssum <= maxSum; ssum++) {
+                prefix[i][ssum] = (prefix[i][ssum-1] + dp[i][ssum]) % mod;
+            }
+        }
+        long ans = 0;
+        for (int sum = 0; sum <= maxSum; sum++) {
+            ans = (ans + dp[n-1][sum]) % mod;
+        }
+        return (int) ans;
+    }
+}
