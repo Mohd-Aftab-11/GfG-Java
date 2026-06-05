@@ -1,0 +1,31 @@
+class Solution {
+    public String lexicographicallySmallest(String s, int k) {
+        int n = s.length();
+        
+        if (Integer.bitCount(n) == 1) {
+            k = k / 2;
+        } else {
+            k = k * 2;
+        }
+        if (k >= n) return "-1";
+        
+        java.util.Stack<Character> stack = new java.util.Stack<>();
+        
+        for (char c : s.toCharArray()) {
+            while (!stack.isEmpty() && k > 0 && stack.peek() > c) {
+                stack.pop();
+                k--;
+            }
+            stack.push(c);
+        }
+        while (k > 0 && !stack.isEmpty()) {
+            stack.pop();
+            k--;
+        }
+        StringBuilder sb = new StringBuilder();
+        for (char c : stack) {
+            sb.append(c);
+        }
+        return sb.length() == 0 ? "-1" : sb.toString();
+    }
+}
