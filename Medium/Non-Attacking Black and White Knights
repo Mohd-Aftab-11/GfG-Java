@@ -1,0 +1,14 @@
+class Solution {
+    public long numOfWays(int n, int m) {
+        long total = (long) n * m * (n * m - 1);
+        long attack = 0;
+        
+        if (n >= 1 && m >= 2) {
+            attack += 4L * (n - 1) * (m - 2);
+        }
+        if (n >= 2 && m >= 1) {
+            attack += 4L * (n - 2) * (m - 1);
+        }
+        return total - attack;
+    }
+}
