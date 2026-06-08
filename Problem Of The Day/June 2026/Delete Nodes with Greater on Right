@@ -1,0 +1,42 @@
+class Solution {
+    Node compute(Node head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        Node reversedHead = reverseList(head);
+        
+        Node current = reversedHead;
+        Node prev = null;
+        int maxSoFar = Integer.MIN_VALUE;
+        
+        while (current != null) {
+            if (current.data < maxSoFar) {
+                if (prev != null) {
+                    prev.next = current.next;
+                } else {
+                    reversedHead = current.next;
+                }
+                current = current.next;
+            } else {
+                maxSoFar = current.data;
+                prev = current;
+                current = current.next;
+            }
+        }
+        return reverseList(reversedHead);
+    }
+    
+    private Node reverseList(Node head) {
+        Node prev = null;
+        Node current = head;
+        Node next = null;
+        
+        while (current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
+    }
+}
