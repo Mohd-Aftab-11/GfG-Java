@@ -1,0 +1,32 @@
+class Solution {
+    public int binarySearchable(int[] arr) {
+        int n = arr.length;
+        int count = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (isBinarySearchable(arr, i)) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    private boolean isBinarySearchable(int[] arr, int targetIndex) {
+        int target = arr[targetIndex];
+        int left = 0;
+        int right = arr.length - 1;
+        
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            
+            if (arr[mid] == target) {
+                return mid == targetIndex;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        return false;
+    }
+}
