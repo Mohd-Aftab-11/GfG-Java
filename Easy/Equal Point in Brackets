@@ -1,0 +1,25 @@
+class Solution {
+    public int findIndex(String s) {
+        int n = s.length();
+        int totalClose = 0;
+        
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == ')') totalClose++;
+        }
+        int openCount = 0;
+        int closeLeft = 0;
+        
+        for (int k = 0; k <= n; k++) {
+            int rightCloseCount = totalClose - closeLeft;
+            if (openCount == rightCloseCount) {
+                return k;
+            }
+            if (k < n) {
+                char c = s.charAt(k);
+                if (c == '(') openCount++;
+                else closeLeft++;
+            }
+        }
+        return -1;
+    }
+}
