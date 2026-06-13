@@ -1,0 +1,33 @@
+import java.util.*;
+
+class Solution {
+    public List<Long> uniqueSize(int n, int d, long[][] arr) {
+        long[] length = new long[n + 1];
+        Map<Long, Integer> freq = new HashMap<>();
+        
+        freq.put(0L, n);
+        
+        List<Long> result = new ArrayList<>();
+        
+        for (int day = 0; day < d; day++) {
+            int node = (int) arr[day][0];
+            long inc = arr[day][1];
+            
+            long oldLen = length[node];
+            long newLen = oldLen + inc;
+
+            int oldCount = freq.get(oldLen);
+            if (oldCount == 1) {
+                freq.remove(oldLen);
+            } else {
+                freq.put(oldLen, oldCount - 1);
+            }
+            freq.put(newLen, freq.getOrDefault(newLen, 0) + 1);
+            
+            length[node] = newLen;
+            
+            result.add((long) freq.size());
+        }
+        return result;
+    }
+}
