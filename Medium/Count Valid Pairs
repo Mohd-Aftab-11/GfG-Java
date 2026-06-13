@@ -1,0 +1,63 @@
+import java.util.*;
+
+class Solution {
+    public static long cntValid(int[] w) {
+        int n = w.length;
+        DSU dsu = new DSU(n);
+        
+        for (int bit = 0; bit < 32; bit++) {
+            int first = -1;
+            for (int i = 0; i < n; i++) {
+                if ((w[i] & (1L << bit)) != 0) {
+                    if (first == -1) {
+                        first = i;
+                    } else {
+                        dsu.union(first, i);
+                    }
+                }
+            }
+        }
+        
+        long[] size = new long[n];
+        for (int i = 0; i < n; i++) {
+            size[dsu.find(i)]++;
+        }
+        
+        long totalPairs = 0;
+        for (int i = 0; i < n; i++) {
+            if (size[i] > 0) {
+                totalPairs += size[i] * (size[i] - 1) / 2;
+            }
+        }
+        
+        return totalPairs;
+    }
+}
+
+class DSU {
+    int[] parent, rank;
+    
+    DSU(int n) {
+        parent = new int[n];
+        rank = new int[n];
+        for (int i = 0; i < n; i++) parent[i] = i;
+    }
+    
+    int find(int x) {
+        if (parent[x] != x) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+    
+    void union(int x, int y) {
+        int rx = find(x), ry = find(y);
+        if (rx == ry) return;
+        if (rank[rx] < rank[ry]) {
+            parent[rx] = ry;
+        } else if (rank[rx] > rank[ry]) {
+            parent[ry] = rx;
+        } else {
+            parent[ry] = rx;
+            rank[rx]++;
+        }
+    }
+}
