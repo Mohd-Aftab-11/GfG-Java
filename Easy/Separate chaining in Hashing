@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+
+class Solution {
+    public ArrayList<ArrayList<Integer>> separateChaining(int hashSize, int[] arr) {
+        ArrayList<ArrayList<Integer>> hashTable = new ArrayList<>();
+        for (int i = 0; i < hashSize; i++) {
+            hashTable.add(new ArrayList<>());
+        }
+        for (int num : arr) {
+            int index = num % hashSize;
+            hashTable.get(index).add(num);
+        }
+        return hashTable;
+    }
+}
