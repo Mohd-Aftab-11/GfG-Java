@@ -1,0 +1,28 @@
+class Solution {
+    public ArrayList<Integer> optimalArray(int[] arr) {
+        int n = arr.length;
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        long[] prefixSum = new long[n + 1];
+        for (int i = 0; i < n; i++) {
+            prefixSum[i + 1] = prefixSum[i] + arr[i];
+        }
+        
+        for (int i = 0; i < n; i++) {
+            int medianIdx = i / 2;
+            int median = arr[medianIdx];
+            
+            int leftCount = medianIdx;
+            int rightCount = i - medianIdx;
+            
+            long leftSum = prefixSum[medianIdx];
+            
+            long rightSum = prefixSum[i + 1] - prefixSum[medianIdx + 1];
+            
+            long operations = (median * leftCount - leftSum) + (rightSum - median * rightCount);
+            
+            result.add((int)operations);
+        }
+        return result;
+    }
+}
