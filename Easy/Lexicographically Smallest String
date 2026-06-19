@@ -1,0 +1,27 @@
+class Solution {
+    String lexiString(String s) {
+        int n = s.length();
+        String doubled = s + s;
+        
+        int i = 0, j = 1, k = 0;
+        
+        while (i < n && j < n && k < n) {
+            char a = doubled.charAt(i + k);
+            char b = doubled.charAt(j + k);
+            
+            if (a == b) {
+                k++;
+            } else if (a > b) {
+                i = i + k + 1;
+                if (i == j) i++;
+                k = 0;
+            } else {
+                j = j + k + 1;
+                if (j == i) j++;
+                k = 0;
+            }
+        }
+        int start = Math.min(i, j);
+        return doubled.substring(start, start + n);
+    }
+}
