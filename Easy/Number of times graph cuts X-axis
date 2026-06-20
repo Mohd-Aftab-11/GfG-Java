@@ -1,0 +1,25 @@
+class Solution {
+    public int touchedXaxis(int[] arr) {
+        int count = 0;
+        int currentPosition = 0;
+        
+        for (int i = 0; i < arr.length; i++) {
+            int nextPosition = currentPosition + arr[i];
+            
+            if (currentPosition == 0) {
+            }
+            if ((currentPosition > 0 && nextPosition < 0) || 
+                (currentPosition < 0 && nextPosition > 0)) {
+                count++;
+            }
+            if ((currentPosition > 0 && nextPosition == 0) || 
+                (currentPosition < 0 && nextPosition == 0)) {
+                count++;
+            }
+            if (currentPosition == 0 && i == 0) {
+            }
+            currentPosition = nextPosition;
+        }
+        return count;
+    }
+}
