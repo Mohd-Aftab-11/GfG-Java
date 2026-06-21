@@ -1,0 +1,35 @@
+class Solution {
+    public String chooseSwap(String s) {
+        char[] chars = s.toCharArray();
+        int n = chars.length;
+        
+        int[] firstOccurrence = new int[26];
+        for (int i = 0; i < 26; i++) {
+            firstOccurrence[i] = -1;
+        }
+        
+        for (int i = 0; i < n; i++) {
+            if (firstOccurrence[chars[i] - 'a'] == -1) {
+                firstOccurrence[chars[i] - 'a'] = i;
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            char current = chars[i];
+            
+            for (char c = 'a'; c < current; c++) {
+                int pos = firstOccurrence[c - 'a'];
+                if (pos > i) {
+                    for (int j = 0; j < n; j++) {
+                        if (chars[j] == current) {
+                            chars[j] = c;
+                        } else if (chars[j] == c) {
+                            chars[j] = current;
+                        }
+                    }
+                    return new String(chars);
+                }
+            }
+        }
+        return s;
+    }
+}
