@@ -1,0 +1,24 @@
+class Solution {
+    public List<Integer> twoSum(int arr[], int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        for (int num : arr) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        
+        for (int num : arr) {
+            int complement = target - num;
+            
+            if (map.containsKey(complement)) {
+                if (num == complement && map.get(num) < 2) {
+                    continue;
+                }
+                List<Integer> result = new ArrayList<>();
+                result.add(num);
+                result.add(complement);
+                return result;
+            }
+        }
+        return new ArrayList<>();
+    }
+}
