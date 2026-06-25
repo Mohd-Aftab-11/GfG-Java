@@ -1,0 +1,28 @@
+import java.util.*;
+
+class Solution {
+    public static ArrayList<Integer> increasingNumbers(int n) {
+        ArrayList<Integer> result = new ArrayList<>();
+        
+        if (n > 9) {
+            return result;
+        }
+        for (int start = (n == 1 ? 0 : 1); start <= 9; start++) {
+            dfs(result, start, n, 1);
+        }
+        Collections.sort(result);
+        return result;
+    }
+    
+    private static void dfs(ArrayList<Integer> result, int current, int n, int length) {
+        if (length == n) {
+            result.add(current);
+            return;
+        }
+        int lastDigit = current % 10;
+        
+        for (int nextDigit = lastDigit + 1; nextDigit <= 9; nextDigit++) {
+            dfs(result, current * 10 + nextDigit, n, length + 1);
+        }
+    }
+}
