@@ -1,0 +1,4 @@
+class Solution {
+    public void DeleteArray(int[] arr) {
+    }
+}
