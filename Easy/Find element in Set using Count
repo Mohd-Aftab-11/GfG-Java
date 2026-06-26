@@ -1,0 +1,3 @@
+bool sExists(set<int>& s, int x) {
+    return s.count(x) > 0;
+}
