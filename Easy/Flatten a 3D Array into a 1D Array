@@ -1,0 +1,5 @@
+import numpy as np
+
+class Solution:
+    def flattenArray(self, arr):
+        return arr.ravel()
