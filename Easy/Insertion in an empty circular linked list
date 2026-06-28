@@ -1,0 +1,9 @@
+class Solution {
+    public Node insertIntoEmpty(Node last, int data) {
+        Node newNode = new Node(data);
+        
+        newNode.next = newNode;
+        
+        return newNode;
+    }
+}
