@@ -1,0 +1,16 @@
+class maxArea {
+    static int calculate_Area(Rectangle arr[]) {
+        if (arr == null || arr.length == 0) {
+            return 0;
+        }
+        int maxArea = Integer.MIN_VALUE;
+        
+        for (Rectangle rect : arr) {
+            int currentArea = rect.area();
+            if (currentArea > maxArea) {
+                maxArea = currentArea;
+            }
+        }
+        return maxArea;
+    }
+}
