@@ -1,0 +1,32 @@
+class Solution {
+    public boolean divisibleByK(int[] arr, int k) {
+        if (arr.length >= k) {
+            return true;
+        }
+        boolean[] dp = new boolean[k];
+        
+        for (int num : arr) {
+            int remainder = num % k;
+            
+            if (dp[0]) {
+                return true;
+            }
+            boolean[] newDp = dp.clone();
+            
+            for (int r = 0; r < k; r++) {
+                if (dp[r]) {
+                    int newRemainder = (r + remainder) % k;
+                    newDp[newRemainder] = true;
+                }
+            }
+            newDp[remainder] = true;
+            
+            dp = newDp;
+            
+            if (dp[0]) {
+                return true;
+            }
+        }
+        return dp[0];
+    }
+}
