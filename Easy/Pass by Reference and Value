@@ -1,0 +1,9 @@
+class Solution {
+    static int[] passedBy(int a, int b) {
+        int valByValue = a + 1;
+        
+        int valByReference = b + 2;
+        
+        return new int[]{valByValue, valByReference};
+    }
+}
