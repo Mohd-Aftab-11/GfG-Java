@@ -1,0 +1,37 @@
+class Solution {
+    public int largestArea(int n, int m, int[][] arr) {
+        if (arr.length == 0) {
+            return n * m;
+        }
+        
+        int k = arr.length;
+        int[] blockedRows = new int[k];
+        int[] blockedCols = new int[k];
+        
+        for (int i = 0; i < k; i++) {
+            blockedRows[i] = arr[i][0];
+            blockedCols[i] = arr[i][1];
+        }
+        int maxRowGap = findMaxGap(blockedRows, n);
+        int maxColGap = findMaxGap(blockedCols, m);
+        
+        return maxRowGap * maxColGap;
+    }
+    
+    private int findMaxGap(int[] blocked, int limit) {
+        java.util.Arrays.sort(blocked);
+        
+        int maxGap = 0;
+        int prev = 0;
+        
+        for (int pos : blocked) {
+            int gap = pos - prev - 1;
+            maxGap = Math.max(maxGap, gap);
+            prev = pos;
+        }
+        int gap = limit - prev;
+        maxGap = Math.max(maxGap, gap);
+        
+        return maxGap;
+    }
+}
