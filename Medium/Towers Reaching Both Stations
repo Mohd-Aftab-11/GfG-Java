@@ -1,0 +1,82 @@
+class Solution {
+    public int countCoordinates(int[][] mat) {
+        int n = mat.length;
+        int m = mat[0].length;
+        
+        boolean[][] canReachP = new boolean[n][m];
+        boolean[][] canReachQ = new boolean[n][m];
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == 0 || j == 0) {
+                    canReachP[i][j] = true;
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (i == n - 1 || j == m - 1) {
+                    canReachQ[i][j] = true;
+                }
+            }
+        }
+        int[] dx = {-1, 1, 0, 0};
+        int[] dy = {0, 0, -1, 1};
+        
+        java.util.ArrayDeque<int[]> qP = new java.util.ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (canReachP[i][j]) {
+                    qP.add(new int[]{i, j});
+                }
+            }
+        }
+        
+        while (!qP.isEmpty()) {
+            int[] cur = qP.poll();
+            int i = cur[0], j = cur[1];
+            for (int d = 0; d < 4; d++) {
+                int ni = i + dx[d];
+                int nj = j + dy[d];
+                if (ni >= 0 && ni < n && nj >= 0 && nj < m && !canReachP[ni][nj]) {
+                    if (mat[i][j] <= mat[ni][nj]) {
+                        canReachP[ni][nj] = true;
+                        qP.add(new int[]{ni, nj});
+                    }
+                }
+            }
+        }
+        java.util.ArrayDeque<int[]> qQ = new java.util.ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (canReachQ[i][j]) {
+                    qQ.add(new int[]{i, j});
+                }
+            }
+        }
+        
+        while (!qQ.isEmpty()) {
+            int[] cur = qQ.poll();
+            int i = cur[0], j = cur[1];
+            for (int d = 0; d < 4; d++) {
+                int ni = i + dx[d];
+                int nj = j + dy[d];
+                if (ni >= 0 && ni < n && nj >= 0 && nj < m && !canReachQ[ni][nj]) {
+                    if (mat[i][j] <= mat[ni][nj]) {
+                        canReachQ[ni][nj] = true;
+                        qQ.add(new int[]{ni, nj});
+                    }
+                }
+            }
+        }
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (canReachP[i][j] && canReachQ[i][j]) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+}
