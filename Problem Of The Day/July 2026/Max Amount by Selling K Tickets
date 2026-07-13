@@ -1,0 +1,26 @@
+import java.util.*;
+
+class Solution {
+    public int maxAmount(int[] arr, int k) {
+        final int MOD = 1_000_000_007;
+        
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for (int price : arr) {
+            maxHeap.offer(price);
+        }
+        long totalEarnings = 0;
+        
+        for (int i = 0; i < k; i++) {
+            if (maxHeap.isEmpty()) break;
+            
+            int currentPrice = maxHeap.poll();
+            totalEarnings = (totalEarnings + currentPrice) % MOD;
+            
+            if (currentPrice > 1) {
+                maxHeap.offer(currentPrice - 1);
+            }
+        }
+        return (int) totalEarnings;
+    }
+}
