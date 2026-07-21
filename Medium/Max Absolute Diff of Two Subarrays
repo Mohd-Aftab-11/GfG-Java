@@ -1,0 +1,49 @@
+class Solution {
+    public int maxDiffSubArrays(int[] arr) {
+        int n = arr.length;
+        
+        if (n < 2) {
+            return 0;
+        }
+        int[] maxLeft = new int[n];
+        int[] minLeft = new int[n];
+        
+        int[] maxRight = new int[n];
+        int[] minRight = new int[n];
+        
+        int maxEndingHere = arr[0];
+        int minEndingHere = arr[0];
+        maxLeft[0] = arr[0];
+        minLeft[0] = arr[0];
+        
+        for (int i = 1; i < n; i++) {
+            maxEndingHere = Math.max(arr[i], maxEndingHere + arr[i]);
+            maxLeft[i] = Math.max(maxLeft[i - 1], maxEndingHere);
+            
+            minEndingHere = Math.min(arr[i], minEndingHere + arr[i]);
+            minLeft[i] = Math.min(minLeft[i - 1], minEndingHere);
+        }
+        maxEndingHere = arr[n - 1];
+        minEndingHere = arr[n - 1];
+        maxRight[n - 1] = arr[n - 1];
+        minRight[n - 1] = arr[n - 1];
+        
+        for (int i = n - 2; i >= 0; i--) {
+            maxEndingHere = Math.max(arr[i], maxEndingHere + arr[i]);
+            maxRight[i] = Math.max(maxRight[i + 1], maxEndingHere);
+            
+            minEndingHere = Math.min(arr[i], minEndingHere + arr[i]);
+            minRight[i] = Math.min(minRight[i + 1], minEndingHere);
+        }
+        int maxDiff = Integer.MIN_VALUE;
+        
+        for (int i = 0; i < n - 1; i++) {
+            int diff1 = maxLeft[i] - minRight[i + 1];
+            maxDiff = Math.max(maxDiff, Math.abs(diff1));
+
+            int diff2 = minLeft[i] - maxRight[i + 1];
+            maxDiff = Math.max(maxDiff, Math.abs(diff2));
+        }
+        return maxDiff;
+    }
+}
