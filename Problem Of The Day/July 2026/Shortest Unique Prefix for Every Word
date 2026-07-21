@@ -1,0 +1,46 @@
+class Solution {
+    class TrieNode {
+        TrieNode[] children = new TrieNode[26];
+        int count = 0;
+    }
+    
+    public ArrayList<String> findPrefixes(String[] arr) {
+        TrieNode root = new TrieNode();
+        
+        for (String word : arr) {
+            insert(root, word);
+        }
+        ArrayList<String> result = new ArrayList<>();
+        for (String word : arr) {
+            result.add(findUniquePrefix(root, word));
+        }
+        return result;
+    }
+    
+    private void insert(TrieNode root, String word) {
+        TrieNode current = root;
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
+            if (current.children[index] == null) {
+                current.children[index] = new TrieNode();
+            }
+            current = current.children[index];
+            current.count++;
+        }
+    }
+    private String findUniquePrefix(TrieNode root, String word) {
+        TrieNode current = root;
+        StringBuilder prefix = new StringBuilder();
+        
+        for (char c : word.toCharArray()) {
+            int index = c - 'a';
+            current = current.children[index];
+            prefix.append(c);
+            
+            if (current.count == 1) {
+                return prefix.toString();
+            }
+        }
+        return prefix.toString();
+    }
+}
