@@ -1,0 +1,64 @@
+import java.util.*;
+
+class Solution {
+    public ArrayList<ArrayList<Integer>> searchWord(char[][] mat, String word) {
+        int n = mat.length;
+        int m = mat[0].length;
+        int len = word.length();
+
+        int[] dx = {-1, -1, -1, 0, 0, 1, 1, 1};
+        int[] dy = {-1, 0, 1, -1, 1, -1, 0, 1};
+
+        Set<String> resultSet = new HashSet<>();
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                for (int dir = 0; dir < 8; dir++) {
+                    boolean found = true;
+
+                    int ni = i + (len - 1) * dx[dir];
+                    int nj = j + (len - 1) * dy[dir];
+                    if (ni < 0 || ni >= n || nj < 0 || nj >= m) {
+                        continue;
+                    }
+                    for (int k = 0; k < len; k++) {
+                        int row = i + k * dx[dir];
+                        int col = j + k * dy[dir];
+                        if (mat[row][col] != word.charAt(k)) {
+                            found = false;
+                            break;
+                        }
+                    }
+
+                    if (found) {
+                        resultSet.add(i + "," + j);
+                        break;
+                    }
+                }
+            }
+        }
+
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        List<String> sortedKeys = new ArrayList<>(resultSet);
+        Collections.sort(sortedKeys, (a, b) -> {
+            String[] parts1 = a.split(",");
+            String[] parts2 = b.split(",");
+            int row1 = Integer.parseInt(parts1[0]);
+            int col1 = Integer.parseInt(parts1[1]);
+            int row2 = Integer.parseInt(parts2[0]);
+            int col2 = Integer.parseInt(parts2[1]);
+            if (row1 != row2) return row1 - row2;
+            return col1 - col2;
+        });
+
+        for (String key : sortedKeys) {
+            String[] parts = key.split(",");
+            ArrayList<Integer> coord = new ArrayList<>();
+            coord.add(Integer.parseInt(parts[0]));
+            coord.add(Integer.parseInt(parts[1]));
+            result.add(coord);
+        }
+
+        return result;
+    }
+}
