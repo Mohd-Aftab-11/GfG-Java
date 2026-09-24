@@ -1,0 +1,37 @@
+class Solution {
+    public String findLongestWord(String s, List<String> d) {
+        Collections.sort(d, (a, b) -> {
+            if (a.length() != b.length()) {
+                return b.length() - a.length();
+            }
+            return a.compareTo(b);
+        });
+
+        int n = s.length();
+        int[][] next = new int[n + 1][26];
+        Arrays.fill(next[n], -1);
+        for (int i = n - 1; i >= 0; i--) {
+            for (int c = 0; c < 26; c++) {
+                next[i][c] = next[i + 1][c];
+            }
+            next[i][s.charAt(i) - 'a'] = i;
+        }
+
+        for (String word : d) {
+            if (isSubsequenceFast(word, next, n)) {
+                return word;
+            }
+        }
+        return "";
+    }
+
+    private boolean isSubsequenceFast(String word, int[][] next, int n) {
+        int pos = 0;
+        for (char c : word.toCharArray()) {
+            int idx = next[pos][c - 'a'];
+            if (idx == -1) return false;
+            pos = idx + 1;
+        }
+        return true;
+    }
+}
