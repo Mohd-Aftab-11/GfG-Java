@@ -1,0 +1,63 @@
+import java.util.Arrays;
+
+class Solution {
+    static int maxHeightRecur(int i, int[][] boxes, int[] dp) {
+
+        if (dp[i] != -1) return dp[i];
+
+        int ans = boxes[i][2];
+
+        for (int j = i + 1; j < boxes.length; j++) {
+            if (boxes[i][0] > boxes[j][0] && boxes[i][1] > boxes[j][1]) {
+                ans = Math.max(ans, boxes[i][2] + maxHeightRecur(j, boxes, dp));
+            }
+        }
+        return dp[i] = ans;
+    }
+
+    static int maxHeight(int[] height, int[] width, int[] length) {
+        int n = height.length;
+
+        int[][] boxes = new int[n * 6][3];
+        int idx = 0;
+
+        for (int i = 0; i < n; i++) {
+            int a = height[i], b = width[i], c = length[i];
+
+            boxes[idx++] = new int[] {a, b, c};
+            boxes[idx++] = new int[] {a, c, b};
+            boxes[idx++] = new int[] {b, a, c};
+            boxes[idx++] = new int[] {b, c, a};
+            boxes[idx++] = new int[] {c, a, b};
+            boxes[idx++] = new int[] {c, b, a};
+        }
+
+        Arrays.sort(boxes, (box1, box2) -> {
+            if (box1[0] == box2[0]) {
+                if( box1[1] == box2[1]) 
+                    return Integer.compare(box1[2], box1[2]);
+                else 
+                    return Integer.compare(box2[1], box1[1]);
+            }
+            return Integer.compare(box2[0], box1[0]);
+        });
+
+        int[] dp = new int[boxes.length];
+        Arrays.fill(dp, -1);
+
+        int ans = 0;
+
+        for (int i = 0; i < boxes.length; i++) {
+            ans = Math.max(ans, maxHeightRecur(i, boxes, dp));
+        }
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        int[] height = {4, 1, 4, 10};
+        int[] width = {6, 2, 5, 12};
+        int[] length = {7, 3, 6, 32};
+
+        System.out.println(maxHeight(height, width, length));
+    }
+}
