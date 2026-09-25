@@ -1,0 +1,30 @@
+import java.util.*;
+
+class Solution {
+    public int dominantPairs(int[] arr) {
+        int n = arr.length;
+        int mid = n / 2;
+
+        int[] first = Arrays.copyOfRange(arr, 0, mid);
+        int[] second = Arrays.copyOfRange(arr, mid, n);
+
+        Arrays.sort(first);
+        Arrays.sort(second);
+
+        int count = 0;
+
+        for (int x : first) {
+            int lo = 0, hi = second.length;
+            while (lo < hi) {
+                int midIdx = lo + (hi - lo) / 2;
+                if (5L * second[midIdx] <= x) {
+                    lo = midIdx + 1;
+                } else {
+                    hi = midIdx;
+                }
+            }
+            count += lo;
+        }
+        return count;
+    }
+}
