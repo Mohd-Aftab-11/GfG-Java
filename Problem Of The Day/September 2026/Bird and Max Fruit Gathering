@@ -1,0 +1,31 @@
+import java.util.*;
+
+class Solution {
+    public int maxFruits(ArrayList<Integer> arr, int m) {
+        int n = arr.size();
+
+        if (m >= n) {
+            int total = 0;
+            for (int val : arr) total += val;
+            return total;
+        }
+
+        int[] doubled = new int[2 * n];
+        for (int i = 0; i < n; i++) {
+            doubled[i] = arr.get(i);
+            doubled[i + n] = arr.get(i);
+        }
+
+        int[] prefix = new int[2 * n + 1];
+        for (int i = 0; i < 2 * n; i++) {
+            prefix[i + 1] = prefix[i] + doubled[i];
+        }
+
+        int maxSum = 0;
+        for (int i = 0; i < n; i++) {
+            int sum = prefix[i + m] - prefix[i];
+            if (sum > maxSum) maxSum = sum;
+        }
+        return maxSum;
+    }
+}
