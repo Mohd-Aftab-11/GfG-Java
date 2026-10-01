@@ -1,0 +1,25 @@
+class Solution {
+    public int minimumCost(int x, int s, int m, int l, int cs, int cm, int cl) {
+        int[] dp = new int[x + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 0;
+
+        for (int i = 1; i <= x; i++) {
+            int rem = Math.max(0, i - s);
+            if (dp[rem] != Integer.MAX_VALUE) {
+                dp[i] = Math.min(dp[i], cs + dp[rem]);
+            }
+
+            rem = Math.max(0, i - m);
+            if (dp[rem] != Integer.MAX_VALUE) {
+                dp[i] = Math.min(dp[i], cm + dp[rem]);
+            }
+
+            rem = Math.max(0, i - l);
+            if (dp[rem] != Integer.MAX_VALUE) {
+                dp[i] = Math.min(dp[i], cl + dp[rem]);
+            }
+        }
+        return dp[x];
+    }
+}
