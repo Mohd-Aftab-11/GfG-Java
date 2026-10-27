@@ -1,0 +1,47 @@
+class Solution {
+    private int n, m;
+    private int[][] matrix;
+    private int[][] memo;
+    private int[][] directions = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+    public int longIncPath(int[][] matrix, int n, int m) {
+        this.n = n;
+        this.m = m;
+        this.matrix = matrix;
+        this.memo = new int[n][m];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                memo[i][j] = 0;
+            }
+        }
+        int maxLength = 0;
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                maxLength = Math.max(maxLength, dfs(i, j));
+            }
+        }
+        return maxLength;
+    }
+
+    private int dfs(int i, int j) {
+        if (memo[i][j] != 0) {
+            return memo[i][j];
+        }
+
+        int maxPath = 1;
+
+        for (int[] dir : directions) {
+            int ni = i + dir[0];
+            int nj = j + dir[1];
+
+            if (ni >= 0 && ni < n && nj >= 0 && nj < m && 
+                matrix[ni][nj] > matrix[i][j]) {
+                maxPath = Math.max(maxPath, 1 + dfs(ni, nj));
+            }
+        }
+        memo[i][j] = maxPath;
+        return maxPath;
+    }
+}
