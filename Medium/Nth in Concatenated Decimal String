@@ -1,0 +1,21 @@
+class Solution {
+    public char nthCharacter(int n) {
+        long digitLen = 1;
+        long count = 9;
+        long start = 1;
+        long pos = n;
+
+        while (pos > digitLen * count) {
+            pos -= digitLen * count;
+            digitLen++;
+            count *= 10;
+            start *= 10;
+        }
+        long number = start + (pos - 1) / digitLen;
+
+        int digitIndex = (int)((pos - 1) % digitLen);
+
+        String numStr = Long.toString(number);
+        return numStr.charAt(digitIndex);
+    }
+}
