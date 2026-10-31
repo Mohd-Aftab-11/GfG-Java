@@ -30,6 +30,7 @@ class Solution {
                 i++;
             }
         }
+
         return (int) (2 * halfSum);
     }
 }
