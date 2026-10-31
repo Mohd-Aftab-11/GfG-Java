@@ -1,0 +1,37 @@
+class Solution {
+    public int longIncPath(int[][] mat) {
+        int m = mat.length, n = mat[0].length;
+        int total = m * n;
+        int[][] dirs = {{-1,0},{1,0},{0,-1},{0,1}};
+        
+        long[] packed = new long[total];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int id = i * n + j;
+                packed[id] = ((long) mat[i][j] << 20) | id;
+            }
+        }
+        java.util.Arrays.sort(packed);
+        
+        int[][] dp = new int[m][n];
+        int ans = 0;
+        
+        for (long p : packed) {
+            int id = (int) (p & 0xFFFFF);
+            int i = id / n, j = id % n;
+            
+            if (dp[i][j] == 0) dp[i][j] = 1;
+            if (dp[i][j] > ans) ans = dp[i][j];
+            
+            for (int[] d : dirs) {
+                int ni = i + d[0], nj = j + d[1];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n 
+                        && mat[ni][nj] > mat[i][j]) {
+                    int cand = dp[i][j] + 1;
+                    if (cand > dp[ni][nj]) dp[ni][nj] = cand;
+                }
+            }
+        }
+        return ans;
+    }
+}
