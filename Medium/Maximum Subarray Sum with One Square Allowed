@@ -1,0 +1,25 @@
+class Solution {
+    public int maximumSubarray(int[] arr) {
+        int n = arr.length;
+
+        long noSquare = arr[0];
+        long withSquare = (long) arr[0] * arr[0];
+
+        long ans = Math.max(noSquare, withSquare);
+
+        for (int i = 1; i < n; i++) {
+            long x = arr[i];
+            long x2 = x * x;
+
+            long newNoSquare = Math.max(noSquare + x, x);
+
+            long newWithSquare = Math.max(Math.max(withSquare + x, noSquare + x2), x2);
+
+            noSquare = newNoSquare;
+            withSquare = newWithSquare;
+
+            ans = Math.max(ans, Math.max(noSquare, withSquare));
+        }
+        return (int) ans;
+    }
+}
