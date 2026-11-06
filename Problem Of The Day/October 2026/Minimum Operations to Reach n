@@ -1,0 +1,7 @@
+class Solution {
+    public int minOperation(int n) {
+        int bitLength = 32 - Integer.numberOfLeadingZeros(n);
+        int bitCount = Integer.bitCount(n);
+        return (bitLength - 1) + bitCount;
+    }
+}
