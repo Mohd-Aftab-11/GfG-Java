@@ -1,0 +1,38 @@
+class Solution {
+    public int largestSumCycle(int[] edge) {
+        int n = edge.length;
+
+        int[] state = new int[n];
+        int[] pos = new int[n];
+        int[] path = new int[n];
+
+        int ans = -1;
+
+        for (int start = 0; start < n; start++) {
+            if (state[start] != 0) continue;
+
+            int len = 0;
+            int u = start;
+
+            while (u != -1 && state[u] == 0) {
+                state[u] = 1;
+                pos[u] = len;
+                path[len++] = u;
+                u = edge[u];
+            }
+
+            if (u != -1 && state[u] == 1) {
+                int cycleSum = 0;
+                for (int k = pos[u]; k < len; k++) {
+                    cycleSum += path[k];
+                }
+                if (cycleSum > ans) ans = cycleSum;
+            }
+
+            for (int k = 0; k < len; k++) {
+                state[path[k]] = 2;
+            }
+        }
+        return ans;
+    }
+}
