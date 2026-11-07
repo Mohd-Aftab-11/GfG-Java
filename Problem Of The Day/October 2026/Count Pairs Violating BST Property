@@ -1,0 +1,56 @@
+import java.util.*;
+
+class Solution {
+    public int pairsViolatingBST(Node root) {
+        List<Integer> inorder = new ArrayList<>();
+        inOrder(root, inorder);
+
+        int n = inorder.size();
+        int[] arr = new int[n];
+        for (int i = 0; i < n; i++) arr[i] = inorder.get(i);
+
+        long inversions = mergeSortCount(arr, 0, n - 1, new int[n]);
+        return (int) inversions;
+    }
+
+    private void inOrder(Node node, List<Integer> result) {
+        if (node == null) return;
+        inOrder(node.left, result);
+        result.add(node.data);
+        inOrder(node.right, result);
+    }
+
+    private long mergeSortCount(int[] arr, int l, int r, int[] temp) {
+        if (l >= r) return 0;
+
+        int mid = l + (r - l) / 2;
+        long count = 0;
+
+        count += mergeSortCount(arr, l, mid, temp);
+        count += mergeSortCount(arr, mid + 1, r, temp);
+        count += merge(arr, l, mid, r, temp);
+
+        return count;
+    }
+
+    private long merge(int[] arr, int l, int mid, int r, int[] temp) {
+        int i = l, j = mid + 1, k = l;
+        long invCount = 0;
+
+        while (i <= mid && j <= r) {
+            if (arr[i] <= arr[j]) {
+                temp[k++] = arr[i++];
+            } else {
+                invCount += (mid - i + 1);
+                temp[k++] = arr[j++];
+            }
+        }
+
+        while (i <= mid) temp[k++] = arr[i++];
+        while (j <= r) temp[k++] = arr[j++];
+
+        for (int x = l; x <= r; x++) arr[x] = temp[x];
+
+        return invCount;
+    }
+}
