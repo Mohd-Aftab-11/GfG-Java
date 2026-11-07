@@ -1,0 +1,51 @@
+import java.util.*;
+
+class Solution {
+    static int[] bits = new int[31];
+    static int[][] dp = new int[31][3];
+    static boolean[][] vis = new boolean[31][3];
+
+    static int solve(int pos, int ones) {
+
+        if (pos < 0)
+            return 0;
+
+        if (vis[pos][ones])
+            return dp[pos][ones];
+
+        vis[pos][ones] = true;
+
+        int res = solve(pos - 1, 0);
+
+        if (bits[pos] == 1 && ones < 2) {
+            res = Math.max(
+                res, (1 << pos) + solve(pos - 1, ones + 1));
+        }
+
+        return dp[pos][ones] = res;
+    }
+
+    static int maxValue(int n) {
+        Arrays.fill(bits, 0);
+
+        for (int i = 0; i < 31; i++) {
+            bits[i] = (n >> i) & 1;
+        }
+
+        for (int i = 0; i < 31; i++) {
+            Arrays.fill(dp[i], 0);
+            Arrays.fill(vis[i], false);
+        }
+
+        for (int i = 0; i < 31; i++)
+            bits[i] = (n >> i) & 1;
+
+        return solve(30, 0);
+    }
+
+    public static void main(String[] args) {
+
+        int n = 7;
+        System.out.println(maxValue(n));
+    }
+}
