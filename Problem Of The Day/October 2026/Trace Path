@@ -1,0 +1,25 @@
+class Solution {
+    public boolean isPossible(int n, int m, String s) {
+        int row = 0, col = 0;
+        int minR = 0, maxR = 0;
+        int minC = 0, maxC = 0;
+
+        for (char ch : s.toCharArray()) {
+            if (ch == 'L') {
+                col--;
+            } else if (ch == 'R') {
+                col++;
+            } else if (ch == 'D') {
+                row--;
+            } else if (ch == 'U') {
+                row++;
+            }
+
+            minR = Math.min(minR, row);
+            maxR = Math.max(maxR, row);
+            minC = Math.min(minC, col);
+            maxC = Math.max(maxC, col);
+        }
+        return (maxR - minR < n) && (maxC - minC < m);
+    }
+}
