@@ -1,0 +1,43 @@
+class Solution {
+    public int goodIndices(int[] arr) {
+        int n = arr.length;
+        int[] state = new int[n];
+        int goodCount = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (state[i] != 0) continue;
+
+            java.util.List<Integer> path = new java.util.ArrayList<>();
+            java.util.Set<Integer> inPath = new java.util.HashSet<>();
+            int cur = i;
+            int result = 0;
+
+            while (true) {
+                if (cur < 0 || cur >= n) {
+                    result = 1;
+                    break;
+                }
+                if (arr[cur] == 0) {
+                    result = 2;
+                    break;
+                }
+                if (state[cur] != 0) {
+                    result = state[cur];
+                    break;
+                }
+                if (inPath.contains(cur)) {
+                    result = 2;
+                    break;
+                }
+                inPath.add(cur);
+                path.add(cur);
+                cur = cur + arr[cur];
+            }
+            for (int idx : path) {
+                state[idx] = result;
+            }
+            if (result == 1) goodCount += path.size();
+        }
+        return goodCount;
+    }
+}
