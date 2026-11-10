@@ -4,6 +4,7 @@ class Solution {
         for (int x : arr) {
             if (++count[x] == k) return x;
         }
+
         return -1;
     }
 }
