@@ -1,0 +1,9 @@
+class Solution {
+    public int firstElementKTime(int[] arr, int k) {
+        int[] count = new int[1_000_001];
+        for (int x : arr) {
+            if (++count[x] == k) return x;
+        }
+        return -1;
+    }
+}
